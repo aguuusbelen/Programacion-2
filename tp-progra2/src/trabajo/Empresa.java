@@ -1,6 +1,6 @@
 package trabajo;
 
-public class Empresa {
+public class Empresa implements IEmpresa {
 	
 	private int cuit;
 	private String nombre;
@@ -13,12 +13,20 @@ public class Empresa {
 		this.capacidadDeposito = capacidadDeposito;
 	}
 
-	public void agregarTransporte (String ID, int pesoMax, int volumenMax, boolean refrigeracion) {
+
+	@Override
+	public void agregarTransporte(String ID, int pesoMax, int volumenMax, boolean refrigeracion) {
+		// TODO Auto-generated method stub
 		
 	}
 
-	public void asignarDestino (String ID, String destino, int cantKm) {
+
+	@Override
+	public void asignarDestino(String ID, String destino, int cantKm) {
+		// TODO Auto-generated method stub
 		
 	}
+
+
 
 }
