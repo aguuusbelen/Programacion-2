@@ -15,7 +15,7 @@ public class Empresa implements IEmpresa {
 
 
 	@Override
-	public void agregarTransporte(String ID, int pesoMax, int volumenMax, boolean refrigeracion) {
+	public void agregarTransporte(String ID, int pesoMax, int volMax, boolean refrigeracion) {
 		// TODO Auto-generated method stub
 		
 	}
