@@ -1,5 +1,5 @@
 package trabajo;
 
-public class DepositoRefrigerado {
+public class DepositoRefrigerado extends Deposito{
 
 }
