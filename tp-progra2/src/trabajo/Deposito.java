@@ -18,11 +18,7 @@ public class Deposito {
 			paquetes.add(paquete);
 			capacidad = capacidad -1;
 			return true;
-		} 
-		
+		}
 		return false;
-		
-	
-		
 	}
 }

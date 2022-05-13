@@ -4,11 +4,15 @@ public interface IEmpresa {
 	
 	public boolean agregarPaquete (String destino, int volumen, int peso, boolean refrigeracion);
 
-	public void agregarTransporte (String ID, int pesoMax, int volumenMax, boolean refrigeracion);
+	public void agregarTransporte (int id, int pesoMax, int volumenMax, boolean refrigeracion);
 
-	public void asignarDestino (String ID, String destino, int cantKm);
+	public void asignarDestino (int id, String destino, int cantKm);
 	
-	public int cargarMercaderia(String ID);
+	public int cargarMercaderia(int id);
 	
-	public void iniciarViaje(String ID);
+	public void iniciarViaje(int id);
+	
+	public void finalizarViaje(int id);
+	
+	public int costoViaje(int id);
 }

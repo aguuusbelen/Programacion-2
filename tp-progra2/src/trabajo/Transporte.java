@@ -2,7 +2,7 @@ package trabajo;
 
 public class Transporte {
 	
-	private int ID;
+	private int id;
 	private int pesoMax;
 	private int volMax;
 	private boolean refrigeracion;
@@ -10,9 +10,9 @@ public class Transporte {
 	protected float seguro;
 	
 	
-	public Transporte(int iD, int pesoMax, int volMax, boolean refrigeracion, int kmViaje) {
+	public Transporte(int id, int pesoMax, int volMax, boolean refrigeracion, int kmViaje) {
 		
-		ID = iD;
+		this.id = id;
 		this.pesoMax = pesoMax;
 		this.volMax = volMax;
 		this.refrigeracion = refrigeracion;
@@ -20,7 +20,11 @@ public class Transporte {
 		
 		
 	}
-	
-	
 
+
+	@Override
+	public String toString() {
+		return "Transporte [ID=" + id + ", pesoMax=" + pesoMax + ", volMax=" + volMax + ", refrigeracion="
+				+ refrigeracion + ", kmViaje=" + kmViaje + ", seguro=" + seguro + "]";
+	}
 }

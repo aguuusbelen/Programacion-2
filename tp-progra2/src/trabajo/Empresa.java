@@ -33,26 +33,28 @@ public class Empresa implements IEmpresa {
 		} else {
 			 return depositos.get(1).agregarPaquete(paquete);
 		}
-		
 	}
 	
 
 	@Override
-	public void agregarTransporte(String ID, int pesoMax, int volMax, boolean refrigeracion) {
-		
-		
+	public void agregarTransporte(int id, int pesoMax, int volMax, boolean refrigeracion) {
+		Transporte transporte = new Transporte(id, pesoMax, volMax, refrigeracion, 60);
+		transportes.add(transporte);
 	}
 
 
 	@Override
-	public void asignarDestino(String ID, String destino, int cantKm) {
+	public void asignarDestino(int id, String destino, int cantKm) {
 	
 		
 	}
 
 	@Override
-	public int cargarMercaderia(String ID) {
-		/*if (tieneDestino(ID) && !estaEnViaje(ID)) {
+	public int cargarMercaderia(int id) {
+		// 1. Obtener el objeto, existe?
+		// 2. Controlas que ya tenga asignado el destino. transporte.get(id).destino != null
+		// 3. TENES UNA LISTA DE VIAJES, aca chequeas si esta en camino
+		/*if (tieneDestino(ID) && !estaEnViaje(destino)) {
 			//lista de deposito --> quito paquetes
 			//se agregan paquetes al camion --> hasta llegar al tope del volumen maximo o 
 			//hasta agotar los paquetes del deposito (la lista del deposito queda en 0)
@@ -61,14 +63,14 @@ public class Empresa implements IEmpresa {
 			
 		} else {
 			//se genera la excepcion 
-		}
-		return 0; //devuelve la suma de volumen*/
+		}*/
+		return 0; //devuelve la suma de volumen
 	}
 	
 	//transporte tiene que tener una lista de paquetes 
 	
 	@Override
-	public void iniciarViaje(String ID) {
+	public void iniciarViaje(int id) {
 		//if (estaEnViaje || !tieneDestino || lista de paquetes esta vacia){
 		//	genera excepcion
 		//} else{
@@ -76,19 +78,26 @@ public class Empresa implements IEmpresa {
 	}
 	
 	@Override
-	public void finalizarViaje(String ID) {
+	public void finalizarViaje(int id) {
 		//if (!estaEnViaje) {
 			//se genera excepcion
-		//}
+		//} else {
 		//se eliminan todos los elementos de la lista de paquetes
 		//el destino queda en null
-		//tieneDestino = false;
+		//tieneDestino = false; }
 	}
-
-
 	
-	
-	
+	@Override
+	public int costoViaje(int id) {
+		//if (!estaEnViaje) {
+			//se genera excepcion
+		//} else {
+			//suma costo por km
+			//suma extras dependiendo el tipo de vehiculo
+		
+		
+		return 0;
+	}
 
 
 
