@@ -7,7 +7,7 @@ public class Flete extends Transporte{
 	public Flete(int iD, int pesoMax, int volumenMax, boolean refrigeracion, int kmViaje, int acompañante) {
 		super(iD, pesoMax, volumenMax, refrigeracion, kmViaje);
 		this.acompañante = acompañante;
-		this.seguro = false;
+		
 		
 		
 	}

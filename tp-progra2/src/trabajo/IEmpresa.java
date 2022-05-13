@@ -7,4 +7,8 @@ public interface IEmpresa {
 	public void agregarTransporte (String ID, int pesoMax, int volumenMax, boolean refrigeracion);
 
 	public void asignarDestino (String ID, String destino, int cantKm);
+	
+	public int cargarMercaderia(String ID);
+	
+	public void iniciarViaje(String ID);
 }

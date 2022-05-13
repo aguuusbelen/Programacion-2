@@ -2,11 +2,11 @@ package trabajo;
 
 public class MegaTrailer extends Transporte {
 	
-	private int comida;
+	private float comida;
 	
-	public MegaTrailer(int iD, int pesoMax, int volMax, boolean refrigeracion, int kmViaje, int comida) {
+	public MegaTrailer(int iD, int pesoMax, int volMax, boolean refrigeracion, int kmViaje, float comida, float seguro) {
 		super(iD, pesoMax, volMax, refrigeracion, kmViaje);
-		this.seguro = true;
+		this.seguro = seguro;
 		this.comida = comida;
 	}
 

@@ -7,7 +7,7 @@ public class Transporte {
 	private int volMax;
 	private boolean refrigeracion;
 	private int kmViaje;
-	protected boolean seguro;
+	protected float seguro;
 	
 	
 	public Transporte(int iD, int pesoMax, int volMax, boolean refrigeracion, int kmViaje) {
@@ -17,6 +17,7 @@ public class Transporte {
 		this.volMax = volMax;
 		this.refrigeracion = refrigeracion;
 		this.kmViaje = kmViaje;
+		
 		
 	}
 	
