@@ -12,6 +12,7 @@ public class Empresa {
 	private List<Deposito> depositos;
 	private List<Transporte> transportes;
 	private List<Destino> destinos; 
+	private HashMap <String,String> destinosAsignados;
 
 
 	public Empresa (String cuit, String nombre, int capacidadDeposito) {
@@ -24,7 +25,7 @@ public class Empresa {
 		this.depositos.add(deposito2);
 		this.transportes = new ArrayList<>();
 		this.destinos = new ArrayList<>();
-		
+		this.destinosAsignados = new HashMap<>();		
 	}
 	
 	public boolean incorporarPaquete(String destino, double peso, double volumen, boolean necesitaRefrigeracion) {
@@ -54,26 +55,55 @@ public class Empresa {
 //		
 //	}
 	
+	private boolean existeMatricula (String matricula) {
+		for (Transporte t: transportes) {
+			if(t.getMatricula().equals(matricula)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public void agregarTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm, double segCarga) {
-		Trailer transporte = new Trailer(matricula, cargaMax, capacidad, tieneRefrigeracion, costoKm, segCarga);
-		transportes.add(transporte);
+		if (!existeMatricula(matricula)) {
+			Trailer transporte = new Trailer(matricula, cargaMax, capacidad, tieneRefrigeracion, costoKm, segCarga);
+			transportes.add(transporte);
+		}
+		
 	}
 	
 	public void agregarMegaTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm, double segCarga, double costoFijo, double costoComida) {
-		MegaTrailer transporte = new MegaTrailer(matricula, cargaMax, capacidad, tieneRefrigeracion, costoKm, segCarga, costoFijo, costoComida);
-		transportes.add(transporte);
+		if (!existeMatricula(matricula)) {
+			MegaTrailer transporte = new MegaTrailer(matricula, cargaMax, capacidad, tieneRefrigeracion, costoKm, segCarga, costoFijo, costoComida);
+			transportes.add(transporte);
+		}
+		
 	}
 	
 	public void agregarFlete(String matricula, double cargaMax, double capacidad, double costoKm, int cantAcompaniantes, double costoPorAcompaniante) {
-		Flete transporte = new Flete(matricula, cargaMax, capacidad, costoKm, cantAcompaniantes, costoPorAcompaniante);
-		transportes.add(transporte);
+		if (!existeMatricula(matricula)) {
+			Flete transporte = new Flete(matricula, cargaMax, capacidad, costoKm, cantAcompaniantes, costoPorAcompaniante);
+			transportes.add(transporte);
+		}
+		
 	}
-
+	
+	public boolean existeDestino (String destino) {
+		for (Destino d: destinos) {
+			if (d.getDestino().equals(destino)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	
 	public void asignarDestino(String matricula, String destino) {
-	
-		
+			if(existeDestino(destino) && existeMatricula(matricula)) {
+				destinosAsignados.put(matricula, destino);
+			}
+			else
+				throw new RuntimeException ("Destino no cargado");
 	}
 
 	

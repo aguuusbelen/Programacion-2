@@ -21,6 +21,11 @@ public abstract class Transporte {
 	}
 
 
+	public String getMatricula() {
+		return matricula;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Transporte [ID=" + matricula + ", pesoMax=" + capacidad + ", volMax=" + cargaMax + ", refrigeracion="
