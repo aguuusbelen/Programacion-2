@@ -25,9 +25,9 @@ public class Empresa {
 		
 	}
 	
-	public boolean incorporarPaquete(String destino, double volumen, double peso, boolean refrigeracion) {
-		Paquete paquete = new Paquete(peso, volumen, destino, refrigeracion);
-		if (refrigeracion) {
+	public boolean incorporarPaquete(String destino, double peso, double volumen, boolean necesitaRefrigeracion) {
+		Paquete paquete = new Paquete(destino, peso, volumen, necesitaRefrigeracion);
+		if (necesitaRefrigeracion) {
 			 return depositos.get(0).agregarPaquete(paquete); //devuelve verdadero o falso dependiendo si el paquete se pudo agregar o no al deposito
 		} else {
 			 return depositos.get(1).agregarPaquete(paquete);
@@ -113,7 +113,9 @@ public class Empresa {
 		return 0;
 	}
 
-	
+	public String obtenerTransporteIgual(String matricula) {
+		return "matricula";
+	}
 
 
 }

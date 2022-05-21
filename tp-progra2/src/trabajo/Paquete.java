@@ -7,7 +7,7 @@ public class Paquete {
 	private String destino;
 	private boolean refrigeracion;
 	
-	public Paquete (double peso, double volumen, String destino, boolean refrigeracion) {
+	public Paquete (String destino,double peso, double volumen,  boolean refrigeracion) {
 		
 		this.peso = peso;
 		this.volumen = volumen;
