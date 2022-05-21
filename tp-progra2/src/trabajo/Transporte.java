@@ -2,7 +2,7 @@ package trabajo;
 
 public class Transporte {
 	
-	private int id;
+	private String idTransporte;
 	private int pesoMax;
 	private int volMax;
 	private boolean refrigeracion;
@@ -10,9 +10,9 @@ public class Transporte {
 	protected float seguro;
 	
 	
-	public Transporte(int id, int pesoMax, int volMax, boolean refrigeracion, int kmViaje) {
+	public Transporte(String idTransporte, int pesoMax, int volMax, boolean refrigeracion, int kmViaje) {
 		
-		this.id = id;
+		this.idTransporte = idTransporte;
 		this.pesoMax = pesoMax;
 		this.volMax = volMax;
 		this.refrigeracion = refrigeracion;

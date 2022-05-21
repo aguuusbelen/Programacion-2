@@ -5,15 +5,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-public class Empresa implements IEmpresa {
+public class Empresa {
 	
-	private int cuit;
+	private String cuit;
 	private String nombre;
 	private List<Deposito> depositos;
 	private List<Transporte> transportes;
 
 
-	public Empresa (int cuit, String nombre, int capacidadDeposito) {
+	public Empresa (String cuit, String nombre, int capacidadDeposito) {
 		this.cuit = cuit;
 		this.nombre = nombre;
 		this.depositos = new ArrayList<>(); 						//creamos una lista en el caso de que en algun momento se quieran agregar mas depositos
@@ -25,7 +25,6 @@ public class Empresa implements IEmpresa {
 		
 	}
 	
-	@Override
 	public boolean agregarPaquete(String destino, int volumen, int peso, boolean refrigeracion) {
 		Paquete paquete = new Paquete(peso, volumen, destino, refrigeracion);
 		if (refrigeracion) {
@@ -36,21 +35,21 @@ public class Empresa implements IEmpresa {
 	}
 	
 
-	@Override
-	public void agregarTransporte(int id, int pesoMax, int volMax, boolean refrigeracion) {
-		Transporte transporte = new Transporte(id, pesoMax, volMax, refrigeracion, 60);
+	
+	public void agregarTransporte(String idTransporte, int pesoMax, int volMax, boolean refrigeracion) {
+		Transporte transporte = new Transporte(idTransporte, pesoMax, volMax, refrigeracion, 60);
 		transportes.add(transporte);
 	}
 
 
-	@Override
-	public void asignarDestino(int id, String destino, int cantKm) {
+	
+	public void asignarDestino(String idTransporte, String destino, int cantKm) {
 	
 		
 	}
 
-	@Override
-	public int cargarMercaderia(int id) {
+	
+	public int cargarMercaderia(String idTransporte) {
 		// 1. Obtener el objeto, existe?
 		// 2. Controlas que ya tenga asignado el destino. transporte.get(id).destino != null
 		// 3. TENES UNA LISTA DE VIAJES, aca chequeas si esta en camino
@@ -69,16 +68,16 @@ public class Empresa implements IEmpresa {
 	
 	//transporte tiene que tener una lista de paquetes 
 	
-	@Override
-	public void iniciarViaje(int id) {
+	
+	public void iniciarViaje(String idTransporte) {
 		//if (estaEnViaje || !tieneDestino || lista de paquetes esta vacia){
 		//	genera excepcion
 		//} else{
 		//  estaEnViaje = true;
 	}
 	
-	@Override
-	public void finalizarViaje(int id) {
+	
+	public void finalizarViaje(String idTransporte) {
 		//if (!estaEnViaje) {
 			//se genera excepcion
 		//} else {
@@ -87,8 +86,8 @@ public class Empresa implements IEmpresa {
 		//tieneDestino = false; }
 	}
 	
-	@Override
-	public int costoViaje(int id) {
+	
+	public int costoViaje(String idTransporte) {
 		//if (!estaEnViaje) {
 			//se genera excepcion
 		//} else {
@@ -99,6 +98,7 @@ public class Empresa implements IEmpresa {
 		return 0;
 	}
 
+	
 
 
 }
