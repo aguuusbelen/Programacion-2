@@ -25,7 +25,7 @@ public class Empresa {
 		
 	}
 	
-	public boolean incorporarPaquete(String destino, int volumen, int peso, boolean refrigeracion) {
+	public boolean incorporarPaquete(String destino, double volumen, double peso, boolean refrigeracion) {
 		Paquete paquete = new Paquete(peso, volumen, destino, refrigeracion);
 		if (refrigeracion) {
 			 return depositos.get(0).agregarPaquete(paquete); //devuelve verdadero o falso dependiendo si el paquete se pudo agregar o no al deposito
