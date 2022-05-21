@@ -1,8 +1,8 @@
 package trabajo;
 
-public class Transporte {
+public abstract class Transporte {
 	
-	private String idTransporte;
+	private String matricula;
 	private int pesoMax;
 	private int volMax;
 	private boolean refrigeracion;
@@ -10,9 +10,9 @@ public class Transporte {
 	protected float seguro;
 	
 	
-	public Transporte(String idTransporte, int pesoMax, int volMax, boolean refrigeracion, int kmViaje) {
+	public Transporte(String matricula, int pesoMax, int volMax, boolean refrigeracion, int kmViaje) {
 		
-		this.idTransporte = idTransporte;
+		this.matricula = matricula;
 		this.pesoMax = pesoMax;
 		this.volMax = volMax;
 		this.refrigeracion = refrigeracion;

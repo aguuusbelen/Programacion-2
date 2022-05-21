@@ -25,7 +25,7 @@ public class Empresa {
 		
 	}
 	
-	public boolean agregarPaquete(String destino, int volumen, int peso, boolean refrigeracion) {
+	public boolean incorporarPaquete(String destino, int volumen, int peso, boolean refrigeracion) {
 		Paquete paquete = new Paquete(peso, volumen, destino, refrigeracion);
 		if (refrigeracion) {
 			 return depositos.get(0).agregarPaquete(paquete); //devuelve verdadero o falso dependiendo si el paquete se pudo agregar o no al deposito
@@ -36,20 +36,22 @@ public class Empresa {
 	
 
 	
-	public void agregarTransporte(String idTransporte, int pesoMax, int volMax, boolean refrigeracion) {
-		Transporte transporte = new Transporte(idTransporte, pesoMax, volMax, refrigeracion, 60);
+	public void agregarTransporte(String matricula, int pesoMax, int volMax, boolean refrigeracion) {
+		Transporte transporte = new Transporte(matricula, pesoMax, volMax, refrigeracion, 60);
 		transportes.add(transporte);
 	}
 
-
+	public void agregarDestino(String destino, int km) {
+		
+	}
 	
-	public void asignarDestino(String idTransporte, String destino, int cantKm) {
+	public void asignarDestino(String matricula, String destino) {
 	
 		
 	}
 
 	
-	public int cargarMercaderia(String idTransporte) {
+	public int cargarMercaderia(String matricula) {
 		// 1. Obtener el objeto, existe?
 		// 2. Controlas que ya tenga asignado el destino. transporte.get(id).destino != null
 		// 3. TENES UNA LISTA DE VIAJES, aca chequeas si esta en camino
@@ -69,7 +71,7 @@ public class Empresa {
 	//transporte tiene que tener una lista de paquetes 
 	
 	
-	public void iniciarViaje(String idTransporte) {
+	public void iniciarViaje(String matricula) {
 		//if (estaEnViaje || !tieneDestino || lista de paquetes esta vacia){
 		//	genera excepcion
 		//} else{
@@ -77,7 +79,7 @@ public class Empresa {
 	}
 	
 	
-	public void finalizarViaje(String idTransporte) {
+	public void finalizarViaje(String matricula) {
 		//if (!estaEnViaje) {
 			//se genera excepcion
 		//} else {
@@ -87,7 +89,7 @@ public class Empresa {
 	}
 	
 	
-	public int costoViaje(String idTransporte) {
+	public int costoViaje(String matricula) {
 		//if (!estaEnViaje) {
 			//se genera excepcion
 		//} else {
