@@ -36,10 +36,23 @@ public class Empresa {
 	
 
 	
-	public void agregarTransporte(String matricula, int pesoMax, int volMax, boolean refrigeracion) {
-		Transporte transporte = new Transporte(matricula, pesoMax, volMax, refrigeracion, 60);
-		transportes.add(transporte);
+//	public void agregarTransporte(String matricula, int pesoMax, int volMax, boolean refrigeracion) {
+//		Transporte transporte = new Transporte(matricula, pesoMax, volMax, refrigeracion, 60);
+//		transportes.add(transporte);
+//	}
+	
+	public void agregarTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm, double segCarga) {
+		
 	}
+	
+	public void agregarMegaTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm, double segCarga, double costoFijo, double costoComida) {
+		
+	}
+	
+	public void agregarFlete(String matricula, double cargaMax, double capacidad, double costoKm, int cantAcompaniantes, double costoPorAcompaniante) {
+		
+	}
+
 
 	public void agregarDestino(String destino, int km) {
 		
@@ -51,7 +64,7 @@ public class Empresa {
 	}
 
 	
-	public int cargarMercaderia(String matricula) {
+	public int cargarTransporte(String matricula) {
 		// 1. Obtener el objeto, existe?
 		// 2. Controlas que ya tenga asignado el destino. transporte.get(id).destino != null
 		// 3. TENES UNA LISTA DE VIAJES, aca chequeas si esta en camino
@@ -89,7 +102,7 @@ public class Empresa {
 	}
 	
 	
-	public int costoViaje(String matricula) {
+	public int obtenerCostoViaje(String matricula) {
 		//if (!estaEnViaje) {
 			//se genera excepcion
 		//} else {
