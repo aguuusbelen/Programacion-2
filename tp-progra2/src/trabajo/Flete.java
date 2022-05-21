@@ -1,12 +1,12 @@
 package trabajo;
 
 public class Flete extends Transporte{
-	private int acompañante;
-	private int costoAcompañante;
+	private int acompaniante;
+	private int costoAcompaniante;
 	
-	public Flete(String matricula, int pesoMax, int volumenMax, boolean refrigeracion, int kmViaje, int acompañante) {
+	public Flete(String matricula, int pesoMax, int volumenMax, boolean refrigeracion, int kmViaje, int acompaniante) {
 		super(matricula, pesoMax, volumenMax, refrigeracion, kmViaje);
-		this.acompañante = acompañante;
+		this.acompaniante = acompaniante;
 		
 		
 		
