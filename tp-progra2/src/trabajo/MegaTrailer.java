@@ -2,12 +2,13 @@ package trabajo;
 
 public class MegaTrailer extends Transporte {
 	
-	private float comida;
+	private double costoComida;
 	
-	public MegaTrailer(String matricula, int pesoMax, int volMax, boolean refrigeracion, int kmViaje, float comida, float seguro) {
-		super(matricula, pesoMax, volMax, refrigeracion, kmViaje);
-		this.seguro = seguro;
-		this.comida = comida;
+	public MegaTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm, double segCarga, double costoFijo, double costoComida) {
+		super(matricula, cargaMax, capacidad, costoKm);
+		this.tieneRefrigeracion = tieneRefrigeracion;
+		this.seguro = segCarga;
+		this.costoComida = costoComida;
 	}
 
 }

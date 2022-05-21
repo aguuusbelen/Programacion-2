@@ -13,12 +13,23 @@ public class Deposito {
 		this.paquetes = new HashSet<>();
 	}
 	
-	public boolean agregarPaquete (Paquete paquete) { //recibe un paquete. Si dentro del deposito hay espacio, lo guarda y devuelve true.
-		if (paquetes.size() < capacidad) {            //caso contrario, devuelve false.
+	//public boolean agregarPaquete (Paquete paquete) { //recibe un paquete. Si dentro del deposito hay espacio, lo guarda y devuelve true.
+	public void agregarPaquete (Paquete paquete) {	
+	            
 			paquetes.add(paquete);
 			capacidad = capacidad -1;
-			return true;
-		}
-		return false;
+			
 	}
+	
+	public boolean tieneCapacidad() {
+		return paquetes.size() < capacidad;
+	}
+
+	public boolean tieneRefrigeracion() {
+		return refrigeracion;
+	}
+
+	
+	
+	
 }

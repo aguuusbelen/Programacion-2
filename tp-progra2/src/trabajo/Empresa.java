@@ -11,6 +11,7 @@ public class Empresa {
 	private String nombre;
 	private List<Deposito> depositos;
 	private List<Transporte> transportes;
+	private List<Destino> destinos; 
 
 
 	public Empresa (String cuit, String nombre, int capacidadDeposito) {
@@ -22,41 +23,53 @@ public class Empresa {
 		Deposito deposito2 = new Deposito(false, capacidadDeposito);
 		this.depositos.add(deposito2);
 		this.transportes = new ArrayList<>();
+		this.destinos = new ArrayList<>();
 		
 	}
 	
 	public boolean incorporarPaquete(String destino, double peso, double volumen, boolean necesitaRefrigeracion) {
 		Paquete paquete = new Paquete(destino, peso, volumen, necesitaRefrigeracion);
-		if (necesitaRefrigeracion) {
-			 return depositos.get(0).agregarPaquete(paquete); //devuelve verdadero o falso dependiendo si el paquete se pudo agregar o no al deposito
-		} else {
-			 return depositos.get(1).agregarPaquete(paquete);
-		}
+		for (Deposito d: depositos) {
+			if (necesitaRefrigeracion && d.tieneRefrigeracion()) {
+				if (d.tieneCapacidad()) {
+					d.agregarPaquete(paquete);
+					return true;
+				}
+			} 
+		} return false;
 	}
 	
-
+	public void agregarDestino(String destino, int km) {
+		for (Destino d: destinos) {
+			if(d.getDestino().equals(destino)) {
+				throw new RuntimeException ("El destino ya existe");
+			}
+		}
+		Destino destino_ = new Destino (destino, km);
+		this.destinos.add(destino_);
+	}
+	
 	
 //	public void agregarTransporte(String matricula, int pesoMax, int volMax, boolean refrigeracion) {
-//		Transporte transporte = new Transporte(matricula, pesoMax, volMax, refrigeracion, 60);
-//		transportes.add(transporte);
+//		
 //	}
 	
 	public void agregarTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm, double segCarga) {
-		
+		Trailer transporte = new Trailer(matricula, cargaMax, capacidad, tieneRefrigeracion, costoKm, segCarga);
+		transportes.add(transporte);
 	}
 	
 	public void agregarMegaTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm, double segCarga, double costoFijo, double costoComida) {
-		
+		MegaTrailer transporte = new MegaTrailer(matricula, cargaMax, capacidad, tieneRefrigeracion, costoKm, segCarga, costoFijo, costoComida);
+		transportes.add(transporte);
 	}
 	
 	public void agregarFlete(String matricula, double cargaMax, double capacidad, double costoKm, int cantAcompaniantes, double costoPorAcompaniante) {
-		
+		Flete transporte = new Flete(matricula, cargaMax, capacidad, costoKm, cantAcompaniantes, costoPorAcompaniante);
+		transportes.add(transporte);
 	}
 
 
-	public void agregarDestino(String destino, int km) {
-		
-	}
 	
 	public void asignarDestino(String matricula, String destino) {
 	
