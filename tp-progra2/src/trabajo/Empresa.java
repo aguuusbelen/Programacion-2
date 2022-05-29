@@ -128,6 +128,13 @@ public class Empresa {
 	
 	
 	public void iniciarViaje(String matricula) {
+//		if(matricula.estaEnViaje || !matricula.tieneDestino || matricula.paquete < 1) {
+//			throw new RuntimeException ("No tiene mercaderia cargada o ya esta en viaje");
+//		}
+//		else {
+//			matricula.iniciarViaje;
+//		}
+		
 		//if (estaEnViaje || !tieneDestino || lista de paquetes esta vacia){
 		//	genera excepcion
 		//} else{
@@ -136,6 +143,15 @@ public class Empresa {
 	
 	
 	public void finalizarViaje(String matricula) {
+//		if(!estaEnViaje) {
+//			throw new RuntimeException ("No esta en viaje");
+//		}
+//		else {
+//			matricula.paquete = null;
+//			matricula.destino = null;
+//			matricula.tieneDestino = false;
+//		}
+		
 		//if (!estaEnViaje) {
 			//se genera excepcion
 		//} else {
@@ -146,6 +162,13 @@ public class Empresa {
 	
 	
 	public int obtenerCostoViaje(String matricula) {
+//		if (!matricula.estaEnViaje) {
+//			throw new RuntimeException ("No esta en viaje");
+//		}
+//		else {
+//			
+//		}
+		
 		//if (!estaEnViaje) {
 			//se genera excepcion
 		//} else {
@@ -157,7 +180,13 @@ public class Empresa {
 	}
 
 	public String obtenerTransporteIgual(String matricula) {
-		return "matricula";
+//		for (Transporte t: transportes) {
+//			if(t.getMatricula().destino.equals(matricula.destino) 
+//					&& t.getMatricula().carga.equals(matricula.carga){
+//				return "Hay transporte igual";
+//			}
+//		}
+		return null;
 	}
 
 
