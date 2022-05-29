@@ -14,7 +14,6 @@ public class Empresa {
 	private List<Destino> destinos; 
 	private HashMap <String,String> destinosAsignados;
 
-
 	public Empresa (String cuit, String nombre, int capacidadDeposito) {
 		this.cuit = cuit;
 		this.nombre = nombre;
@@ -96,10 +95,16 @@ public class Empresa {
 		}
 		return false;
 	}
+	
+//	public boolean estaEnViaje (String matricula) {
+//		// recorrer destinosAsignados y ver si la matricula esta ahi
+//		// se me ocurre eso pero no se como es lo de HasMap, HashSet y lrpm
+//		// voy a poner a ver videos a ver si sale (?
+//	}
 
 	
 	public void asignarDestino(String matricula, String destino) {
-			if(existeDestino(destino) && existeMatricula(matricula)) {
+			if(existeDestino(destino) && existeMatricula(matricula)) { // && !estaEnViaje(matricula))
 				destinosAsignados.put(matricula, destino);
 			}
 			else
