@@ -136,8 +136,8 @@ public class Empresa {
 			Transporte transporte = buscarTransporte(matricula);
 			for (Deposito d : depositos) {
 				if (d.tieneRefrigeracion() && transporte.tieneRefrigeracion) {
-					 HashSet<Paquete> paquetesDeposito = d.getPaquetes();
-					for (Paquete p : paquetesDeposito) {
+					  
+					for (Paquete p : d.getPaquetes()) {
 						transporte.cargarPaquete(p);
 						//d.eliminarPaquete(p);
 					}
