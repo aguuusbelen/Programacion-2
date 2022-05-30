@@ -2,7 +2,6 @@ package trabajo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 public class Empresa {
@@ -17,8 +16,8 @@ public class Empresa {
 	public Empresa (String cuit, String nombre, int capacidadDeposito) {
 		this.cuit = cuit;
 		this.nombre = nombre;
-		this.depositos = new ArrayList<>(); 						//creamos una lista en el caso de que en algun momento se quieran agregar mas depositos
-		Deposito deposito1 = new Deposito(true, capacidadDeposito); //creamos los dos depositos (el refrigerado y el que no) y los agregamos a la lista
+		this.depositos = new ArrayList<>(); 						
+		Deposito deposito1 = new Deposito(true, capacidadDeposito); 
 		this.depositos.add(deposito1);       						
 		Deposito deposito2 = new Deposito(false, capacidadDeposito);
 		this.depositos.add(deposito2);
@@ -49,20 +48,6 @@ public class Empresa {
 		this.destinos.add(destino_);
 	}
 	
-	
-//	public void agregarTransporte(String matricula, int pesoMax, int volMax, boolean refrigeracion) {
-//		
-//	}
-	
-	private boolean existeMatricula (String matricula) {
-		for (Transporte t: transportes) {
-			if(t.getMatricula().equals(matricula)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	public void agregarTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm, double segCarga) {
 		if (!existeMatricula(matricula)) {
 			Trailer transporte = new Trailer(matricula, cargaMax, capacidad, tieneRefrigeracion, costoKm, segCarga);
@@ -87,7 +72,16 @@ public class Empresa {
 		
 	}
 	
-	public boolean existeDestino (String destino) {
+	private boolean existeMatricula (String matricula) {
+		for (Transporte t: transportes) {
+			if(t.getMatricula().equals(matricula)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean existeDestino (String destino) {
 		for (Destino d: destinos) {
 			if (d.getDestino().equals(destino)) {
 				return true;
@@ -108,11 +102,37 @@ public class Empresa {
 				destinosAsignados.put(matricula, destino);
 			}
 			else
-				throw new RuntimeException ("Destino no cargado");
+				throw new RuntimeException ("No existe la matricula o el destino que se quiere asignar");
+	}
+	
+	private boolean tieneAsignadoDestino (String matricula) {
+		if (destinosAsignados.containsKey(matricula)){   //esto sirve solo si tenemos en cuenta eliminar del hash las matriculas cuando termine el viaje
+			return true;
+		} else {
+			return false;
+		}
 	}
 
-	
+	private Transporte buscarTransporte(String matricula) { //necesito algo que me devuelva todos los datos del transporte
+		for (Transporte t: transportes) {
+			if(t.getMatricula().equals(matricula)) {
+				return t;
+			}
+		}
+		return null;
+	}
 	public int cargarTransporte(String matricula) {
+		if (!existeMatricula(matricula)) {
+			throw new RuntimeException ("No existe la matricula");
+		} else {
+			Transporte transporte = buscarTransporte(matricula);
+			if (tieneAsignadoDestino(matricula)) {  //&& no esta en viaje
+				if (transporte.tieneRefrigeracion) {
+					
+				}
+			}
+		}
+	
 		// 1. Obtener el objeto, existe?
 		// 2. Controlas que ya tenga asignado el destino. transporte.get(id).destino != null
 		// 3. TENES UNA LISTA DE VIAJES, aca chequeas si esta en camino
@@ -133,17 +153,17 @@ public class Empresa {
 	
 	
 	public void iniciarViaje(String matricula) {
-//		if(matricula.estaEnViaje || !matricula.tieneDestino || matricula.paquete < 1) {
-//			throw new RuntimeException ("No tiene mercaderia cargada o ya esta en viaje");
-//		}
-//		else {
-//			matricula.iniciarViaje;
-//		}
+		if(matricula.estaEnViaje || !matricula.tieneDestino || matricula.paquete < 1) {
+			throw new RuntimeException ("No tiene mercaderia cargada o ya esta en viaje");
+		}
+		else {
+			matricula.iniciarViaje;
+		}
 		
-		//if (estaEnViaje || !tieneDestino || lista de paquetes esta vacia){
-		//	genera excepcion
-		//} else{
-		//  estaEnViaje = true;
+		if (estaEnViaje || !tieneDestino || lista de paquetes esta vacia){
+			genera excepcion
+		} else{
+		  estaEnViaje = true;
 	}
 	
 	

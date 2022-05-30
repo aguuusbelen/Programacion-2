@@ -16,13 +16,16 @@ public abstract class Transporte {
 		this.capacidad = capacidad;
 		this.cargaMax = cargaMax;
 		this.costoKm = costoKm;
-		
-		
+	
 	}
-
 
 	public String getMatricula() {
 		return matricula;
+	}
+	
+	public boolean estaEnViaje() {
+		boolean estaEnViaje = false;
+		return estaEnViaje;
 	}
 
 
