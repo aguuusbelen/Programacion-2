@@ -123,7 +123,7 @@ public class Empresa {
 															// transporte
 		for (Transporte t : transportes) {
 			if (t.getMatricula().equals(matricula)) {
-				return t;
+				return t; // matricula, si tiene refrigeracion, el volumen, el peso
 			}
 		}
 		return null;
@@ -133,13 +133,14 @@ public class Empresa {
 		if (!existeMatricula(matricula) || !tieneAsignadoDestino(matricula) /* ||esta en viaje */) {
 			throw new RuntimeException("No se puede cargar el transporte");
 		} else {
+
 			Transporte transporte = buscarTransporte(matricula);
 			for (Deposito d : depositos) {
 				if (d.tieneRefrigeracion() && transporte.tieneRefrigeracion) {
-					  
+
 					for (Paquete p : d.getPaquetes()) {
 						transporte.cargarPaquete(p);
-						//d.eliminarPaquete(p);
+						// d.eliminarPaquete(p);
 					}
 
 				}
@@ -147,7 +148,7 @@ public class Empresa {
 				if (!d.tieneRefrigeracion() && !transporte.tieneRefrigeracion) {
 					for (Paquete p : d.getPaquetes()) {
 						transporte.cargarPaquete(p);
-						//d.eliminarPaquete(p);
+						// d.eliminarPaquete(p);
 					}
 
 				}
