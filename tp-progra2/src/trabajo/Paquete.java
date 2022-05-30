@@ -14,4 +14,10 @@ public class Paquete {
 		this.destino = destino;
 		this.refrigeracion = refrigeracion;
 	}
+
+	public double getVolumen() {
+		return volumen;
+	}
+	
+	
 }

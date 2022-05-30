@@ -18,12 +18,21 @@ public class Deposito {
 			capacidad = capacidad -1;	
 	}
 	
+	public void eliminarPaquete (Paquete paquete) {	      
+		paquetes.remove(paquete);
+		capacidad = capacidad +1;	
+}
+	
 	public boolean tieneCapacidad() {
 		return paquetes.size() < capacidad;
 	}
 
 	public boolean tieneRefrigeracion() {
 		return refrigeracion;
+	}
+
+	public HashSet<Paquete> getPaquetes() {
+		return paquetes;
 	}
 
 	
