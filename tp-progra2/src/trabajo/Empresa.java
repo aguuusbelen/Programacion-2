@@ -2,6 +2,7 @@ package trabajo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class Empresa {
@@ -135,7 +136,8 @@ public class Empresa {
 			Transporte transporte = buscarTransporte(matricula);
 			for (Deposito d : depositos) {
 				if (d.tieneRefrigeracion() && transporte.tieneRefrigeracion) {
-					for (Paquete p : d.getPaquetes()) {
+					 HashSet<Paquete> paquetesDeposito = d.getPaquetes();
+					for (Paquete p : paquetesDeposito) {
 						transporte.cargarPaquete(p);
 						//d.eliminarPaquete(p);
 					}

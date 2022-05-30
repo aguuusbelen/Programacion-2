@@ -34,8 +34,7 @@ public abstract class Transporte {
 		return estaEnViaje;
 	}
 
-	public void cargarPaquete(Paquete p) { 
-		double cargaActual = 0;
+	public void cargarPaquete(Paquete p) {
 		if (cargaActual <= cargaMax) {
 			paquetes.add(p);
 			cargaActual = cargaActual + p.getVolumen();
