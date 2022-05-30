@@ -1,5 +1,7 @@
 package trabajo;
 
+import java.util.HashSet;
+
 public abstract class Transporte {
 	
 	private String matricula;
@@ -8,6 +10,7 @@ public abstract class Transporte {
 	protected boolean tieneRefrigeracion;
 	private double costoKm;
 	protected double seguro;
+	private HashSet<Paquete> paquetes;
 	
 	
 	public Transporte(String matricula, double cargaMax, double capacidad, double costoKm) {
@@ -16,6 +19,7 @@ public abstract class Transporte {
 		this.capacidad = capacidad;
 		this.cargaMax = cargaMax;
 		this.costoKm = costoKm;
+		this.paquetes = new HashSet<>();
 	
 	}
 
@@ -27,6 +31,11 @@ public abstract class Transporte {
 		boolean estaEnViaje = false;
 		return estaEnViaje;
 	}
+	
+	public void cargarPaquete() {  //tiene que ser abstracto para que cada uno verifique su propia capacidad?
+		// reco
+		
+	}
 
 
 	@Override
@@ -34,4 +43,11 @@ public abstract class Transporte {
 		return "Transporte [ID=" + matricula + ", pesoMax=" + capacidad + ", volMax=" + cargaMax + ", refrigeracion="
 				+ tieneRefrigeracion + ", kmViaje=" + costoKm + ", seguro=" + seguro + "]";
 	}
+
+	public int volumen() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
 }

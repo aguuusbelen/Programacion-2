@@ -122,48 +122,42 @@ public class Empresa {
 		return null;
 	}
 	public int cargarTransporte(String matricula) {
-		if (!existeMatricula(matricula)) {
-			throw new RuntimeException ("No existe la matricula");
+		if (!existeMatricula(matricula) || !tieneAsignadoDestino(matricula) /* ||esta en viaje*/) {
+			throw new RuntimeException ("No se puede cargar el transporte");
 		} else {
-			Transporte transporte = buscarTransporte(matricula);
-			if (tieneAsignadoDestino(matricula)) {  //&& no esta en viaje
-				if (transporte.tieneRefrigeracion) {
+			Transporte transporte = buscarTransporte(matricula);		
+			for (Deposito d : depositos) {
+				if (d.tieneRefrigeracion() && transporte.tieneRefrigeracion) {
+					transporte.cargarPaquete(d); //tiene que recorrer los paquetes del deposito d y cargarlos al transporte
+					//ademas deberia sumar el volumen de los paquetes cargados par devolverlo al final
+					
+				}
+
+				if (!d.tieneRefrigeracion() && !transporte.tieneRefrigeracion) {
+					//recorro la lista del depo
+					transporte.cargarPaquete(paquete);
+					//eliminar el paquete del depo
 					
 				}
 			}
-		}
-	
-		// 1. Obtener el objeto, existe?
-		// 2. Controlas que ya tenga asignado el destino. transporte.get(id).destino != null
-		// 3. TENES UNA LISTA DE VIAJES, aca chequeas si esta en camino
-		/*if (tieneDestino(ID) && !estaEnViaje(destino)) {
-			//lista de deposito --> quito paquetes
-			//se agregan paquetes al camion --> hasta llegar al tope del volumen maximo o 
-			//hasta agotar los paquetes del deposito (la lista del deposito queda en 0)
-			
-			//se suman los volumenes de los paquetes
-			
-		} else {
-			//se genera la excepcion 
-		}*/
-		return 0; //devuelve la suma de volumen
+			return transporte.volumen();
+		} 
 	}
 	
-	//transporte tiene que tener una lista de paquetes 
 	
 	
 	public void iniciarViaje(String matricula) {
-		if(matricula.estaEnViaje || !matricula.tieneDestino || matricula.paquete < 1) {
-			throw new RuntimeException ("No tiene mercaderia cargada o ya esta en viaje");
-		}
-		else {
-			matricula.iniciarViaje;
-		}
-		
-		if (estaEnViaje || !tieneDestino || lista de paquetes esta vacia){
-			genera excepcion
-		} else{
-		  estaEnViaje = true;
+//		if(matricula.estaEnViaje || !matricula.tieneDestino || matricula.paquete < 1) {
+//			throw new RuntimeException ("No tiene mercaderia cargada o ya esta en viaje");
+//		}
+//		else {
+//			matricula.iniciarViaje;
+//		}
+//		
+//		if (estaEnViaje || !tieneDestino || lista de paquetes esta vacia){
+//			genera excepcion
+//		} else{
+//		  estaEnViaje = true;
 	}
 	
 	
