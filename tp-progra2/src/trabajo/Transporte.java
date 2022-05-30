@@ -14,6 +14,7 @@ public abstract class Transporte {
 	private HashSet<Paquete> paquetes;
 	
 	
+	
 	public Transporte(String matricula, double cargaMax, double capacidad, double costoKm) {
 
 		this.matricula = matricula;
@@ -22,6 +23,7 @@ public abstract class Transporte {
 		this.cargaActual = 0;
 		this.costoKm = costoKm;
 		this.paquetes = new HashSet<>();
+		
 
 	}
 

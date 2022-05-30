@@ -35,9 +35,14 @@ public class Empresa {
 					d.agregarPaquete(paquete);
 					return true;
 				}
+			} else if (!necesitaRefrigeracion && !d.tieneRefrigeracion()) {
+				if (d.tieneCapacidad()) {
+					d.agregarPaquete(paquete);
+					return true;
+				}
 			}
-		}
-		return false;
+			
+		} return false;
 	}
 
 	public void agregarDestino(String destino, int km) {
@@ -50,20 +55,20 @@ public class Empresa {
 		this.destinos.add(destino_);
 	}
 
-	public void agregarTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion,
-			double costoKm, double segCarga) {
-		if (!existeMatricula(matricula)) {
-			Trailer transporte = new Trailer(matricula, cargaMax, capacidad, tieneRefrigeracion, costoKm, segCarga);
-			transportes.add(transporte);
-		}
-
-	}
-
 	public void agregarMegaTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion,
 			double costoKm, double segCarga, double costoFijo, double costoComida) {
 		if (!existeMatricula(matricula)) {
 			MegaTrailer transporte = new MegaTrailer(matricula, cargaMax, capacidad, tieneRefrigeracion, costoKm,
 					segCarga, costoFijo, costoComida);
+			transportes.add(transporte);
+		}
+
+	}
+
+	public void agregarTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion,
+			double costoKm, double segCarga) {
+		if (!existeMatricula(matricula)) {
+			Trailer transporte = new Trailer(matricula, cargaMax, capacidad, tieneRefrigeracion, costoKm, segCarga);
 			transportes.add(transporte);
 		}
 
@@ -103,7 +108,8 @@ public class Empresa {
 //		// voy a poner a ver videos a ver si sale (?
 //	}
 
-	public void asignarDestino(String matricula, String destino) {
+	public void asignarDestino(String matricula, String destino) { // falta verificar las distancias maximas de cada
+																	// transporte
 		if (existeDestino(destino) && existeMatricula(matricula)) { // && !estaEnViaje(matricula))
 			destinosAsignados.put(matricula, destino);
 		} else
@@ -130,11 +136,17 @@ public class Empresa {
 	}
 
 	public double cargarTransporte(String matricula) {
-		if (!existeMatricula(matricula) || !tieneAsignadoDestino(matricula) /* ||esta en viaje */) {
+		Transporte transporte = buscarTransporte(matricula);
+		if (!existeMatricula(matricula) || !tieneAsignadoDestino(matricula) || transporte.estaEnViaje()) {
 			throw new RuntimeException("No se puede cargar el transporte");
 		} else {
-
-			Transporte transporte = buscarTransporte(matricula);
+			// tengo 4 casos
+			// TRANSPORTE DEPOSITO
+			//     si       si      primer if
+			//     si       no
+			//     no       si
+			//     no       no      segundo if
+			// los dos casos del medio no nos interesan
 			for (Deposito d : depositos) {
 				if (d.tieneRefrigeracion() && transporte.tieneRefrigeracion) {
 
@@ -143,15 +155,13 @@ public class Empresa {
 						// d.eliminarPaquete(p);
 					}
 
-				}
-
-				if (!d.tieneRefrigeracion() && !transporte.tieneRefrigeracion) {
+				}else if (!d.tieneRefrigeracion() && !transporte.tieneRefrigeracion) {
 					for (Paquete p : d.getPaquetes()) {
 						transporte.cargarPaquete(p);
 						// d.eliminarPaquete(p);
 					}
-
 				}
+
 			}
 			return transporte.getCargaActual(); // transporte.volumen();
 		}
@@ -163,6 +173,7 @@ public class Empresa {
 //		}
 //		else {
 //			matricula.iniciarViaje;
+//		transporte.setEstaEnViaje = true;
 //		}
 //		
 //		if (estaEnViaje || !tieneDestino || lista de paquetes esta vacia){
