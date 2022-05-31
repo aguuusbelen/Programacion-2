@@ -95,8 +95,12 @@ public class Empresa {
 		return false;
 	}
 
-	public void asignarDestino(String matricula, String destino) { // falta verificar las distancias maximas de cada
-																	// transporte
+	public void asignarDestino(String matricula, String destino) { 
+		// falta verificar las distancias maximas de cada transporte
+		// 1. Hay que poner la distancia maxima a cada transporte.
+		// 2. Hay que validar esas distancias con el destino
+		// Trailer menos de 500km
+		// MegaTrailer mas de 500 km
 		if(existeDestino(destino) && existeMatricula(matricula)) {
 			Transporte transporte = buscarTransporte(matricula);
 			if(!transporte.isEstaEnViaje()) {
