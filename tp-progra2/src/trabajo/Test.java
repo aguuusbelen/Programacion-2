@@ -39,11 +39,11 @@ public class Test {
 		System.out.println("Se cargaron " + volumen
 		+" metros cubicos en el transp AB55MN(flete)");
 		
-		e.iniciarViaje("AA333XQ");
+		e.iniciarViaje("AA333XQ");  //trailer
 		System.out.println("Costo del viaje:"
 		+e.obtenerCostoViaje("AA333XQ"));
 		System.out.println(e.toString());
-		e.finalizarViaje("AA333XQ");
+		e.finalizarViaje("AA333XQ"); //trailer
 		System.out.println(e.toString());
 		}
 }

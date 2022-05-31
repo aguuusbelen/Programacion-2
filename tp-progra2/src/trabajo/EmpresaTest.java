@@ -65,7 +65,7 @@ public class EmpresaTest {
 		emp.iniciarViaje("AC314PI");
 //		ctoViaje = emp.obtenerCostoViaje("AC314PI");
 //		assertEquals(1850.0, ctoViaje, 0.5);
-//		emp.finalizarViaje("AC314PI");
+		emp.finalizarViaje("AC314PI");
 	}
 
 	@Test
@@ -89,7 +89,7 @@ public class EmpresaTest {
 		emp.iniciarViaje("AD161AU");
 //		ctoViaje = emp.obtenerCostoViaje("AD161AU");
 //		assertEquals(9950.0, ctoViaje, 0.5);
-//		emp.finalizarViaje("AD161AU");
+		emp.finalizarViaje("AD161AU");
 //		
 	}
 

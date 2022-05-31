@@ -1,6 +1,7 @@
 package trabajo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -185,6 +186,8 @@ public class Empresa {
 			throw new RuntimeException ("No esta en viaje");
 		} else {
 			transporte.eliminarPaquete();
+			destinosAsignados.remove(matricula);
+			transporte.setEstaEnViaje(false);
 
 		}
 

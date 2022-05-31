@@ -58,22 +58,11 @@ public abstract class Transporte {
 	}
 	
 	public void eliminarPaquete() {
-		//		if (paquetes.size() != 0) {
-		//			for (Paquete p: paquetes) {
-		//				paquetes.remove(p);
-		//			}
-		//		}
-
-		for (Paquete p: paquetes) {
-			if (paquetes.size() != 0) {
-				paquetes.remove(p);
-			}
-
-		}
-
-
+		paquetes.removeAll(paquetes);
+		
 	}
 
+	
 
 	@Override
 	public String toString() {
