@@ -1,6 +1,7 @@
 package trabajo;
 
 import java.util.HashSet;
+import java.util.List;
 
 public abstract class Transporte {
 
@@ -15,30 +16,6 @@ public abstract class Transporte {
 	private boolean estaEnViaje;
 	
 
-	public double getCapacidad() {
-		return capacidad;
-	}
-
-	public double getCargaMax() {
-		return cargaMax;
-	}
-
-	public boolean isTieneRefrigeracion() {
-		return tieneRefrigeracion;
-	}
-
-	public double getCostoKm() {
-		return costoKm;
-	}
-
-	public double getSeguro() {
-		return seguro;
-	}
-
-	public HashSet<Paquete> getPaquetes() {
-		return paquetes;
-	}
-
 	public Transporte(String matricula, double cargaMax, double capacidad, double costoKm) {
 
 		this.matricula = matricula;
@@ -47,18 +24,13 @@ public abstract class Transporte {
 		this.cargaActual = 0;
 		this.costoKm = costoKm;
 		this.paquetes = new HashSet<>();
-		this.estaEnViaje = true;
+		this.estaEnViaje = false;
 		
 
 	}
 
 	public String getMatricula() {
 		return matricula;
-	}
-
-	public boolean estaEnViaje() {
-		boolean estaEnViaje = false;
-		return estaEnViaje;
 	}
 
 	public void cargarPaquete(Paquete p) {
@@ -79,11 +51,38 @@ public abstract class Transporte {
 	public void setEstaEnViaje(boolean estaEnViaje) {
 		this.estaEnViaje = estaEnViaje;
 	}
+	
+
+	public HashSet<Paquete> getPaquetes() {
+		return paquetes;
+	}
+	
+	public void eliminarPaquete() {
+		//		if (paquetes.size() != 0) {
+		//			for (Paquete p: paquetes) {
+		//				paquetes.remove(p);
+		//			}
+		//		}
+
+		for (Paquete p: paquetes) {
+			if (paquetes.size() != 0) {
+				paquetes.remove(p);
+			}
+
+		}
+
+
+	}
+
 
 	@Override
 	public String toString() {
 		return "Transporte [ID=" + matricula + ", pesoMax=" + capacidad + ", volMax=" + cargaMax + ", refrigeracion="
 				+ tieneRefrigeracion + ", kmViaje=" + costoKm + ", seguro=" + seguro + "]";
 	}
+
+	
+
+	
 
 }

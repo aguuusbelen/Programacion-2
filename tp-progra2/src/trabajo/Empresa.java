@@ -137,7 +137,7 @@ public class Empresa {
 
 	public double cargarTransporte(String matricula) {
 		Transporte transporte = buscarTransporte(matricula);
-		if (!existeMatricula(matricula) || !tieneAsignadoDestino(matricula) || transporte.estaEnViaje()) {
+		if (!existeMatricula(matricula) || !tieneAsignadoDestino(matricula) || transporte.isEstaEnViaje()) {
 			throw new RuntimeException("No se puede cargar el transporte");
 		} else {
 			// tengo 4 casos
@@ -152,37 +152,46 @@ public class Empresa {
 
 					for (Paquete p : d.getPaquetes()) {
 						transporte.cargarPaquete(p);
-						// d.eliminarPaquete(p);
+						//d.eliminarPaquete(p);
 					}
 
 				}else if (!d.tieneRefrigeracion() && !transporte.tieneRefrigeracion) {
 					for (Paquete p : d.getPaquetes()) {
 						transporte.cargarPaquete(p);
-						// d.eliminarPaquete(p);
+						//d.eliminarPaquete(p);
 					}
 				}
 
 			}
-			return transporte.getCargaActual(); // transporte.volumen();
+			return transporte.getCargaActual(); 
 		}
 	}
 
 	public void iniciarViaje(String matricula) {
 		Transporte transporte = buscarTransporte(matricula);
-		if(transporte.estaEnViaje() || !tieneAsignadoDestino(matricula) || transporte.getPaquetes().size() < 1) {
+		
+		if(transporte.isEstaEnViaje() || !tieneAsignadoDestino(matricula) || transporte.getPaquetes().size() < 1) {
 			throw new RuntimeException ("No tiene mercaderia cargada o ya esta en viaje");
 		}
 		else {
 			transporte.setEstaEnViaje(true);
-	//	transporte.setEstaEnViaje = true;
+	
 		}
 	}
 
 	public void finalizarViaje(String matricula) {
-//		if(!estaEnViaje) {
-//			throw new RuntimeException ("No esta en viaje");
-//		}
-//		else {
+		Transporte transporte = buscarTransporte(matricula);
+		if (!transporte.isEstaEnViaje()) {
+			throw new RuntimeException ("No esta en viaje");
+		} else {
+			transporte.eliminarPaquete();
+
+		}
+
+
+	}
+			//vaciar la lista de paquetes del transporte
+			//eliminar del hashmap la matricula con su destino
 //			matricula.paquete = null;
 //			matricula.destino = null;
 //			matricula.tieneDestino = false;
@@ -194,7 +203,7 @@ public class Empresa {
 		// se eliminan todos los elementos de la lista de paquetes
 		// el destino queda en null
 		// tieneDestino = false; }
-	}
+	
 
 	public int obtenerCostoViaje(String matricula) {
 //		if (!matricula.estaEnViaje) {
