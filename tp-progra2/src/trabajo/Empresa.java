@@ -1,9 +1,8 @@
 package trabajo;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 public class Empresa {
@@ -127,28 +126,25 @@ public class Empresa {
 	}
 
 	public double cargarTransporte(String matricula) {
-		Transporte transporte = buscarTransporte(matricula);
-		if (!existeMatricula(matricula) || !tieneAsignadoDestino(matricula) || transporte.isEstaEnViaje()) {
-			throw new RuntimeException("No se puede cargar el transporte");
-		} else {
-
-			for (Deposito d : depositos) {
-				if (d.tieneRefrigeracion() && transporte.tieneRefrigeracion) {
-
-					for (Paquete p : d.getPaquetes()) {
-						transporte.cargarPaquete(p);
-						// d.eliminarPaquete(p);
-					}
-
-				} else if (!d.tieneRefrigeracion() && !transporte.tieneRefrigeracion) {
-					for (Paquete p : d.getPaquetes()) {
-						transporte.cargarPaquete(p);
-						// d.eliminarPaquete(p);
+		if(existeMatricula(matricula) && tieneAsignadoDestino(matricula)) {
+			Transporte transporte = buscarTransporte(matricula);
+			if(!transporte.isEstaEnViaje()) {
+				for (Deposito d : depositos) {
+					if ((d.tieneRefrigeracion() && transporte.tieneRefrigeracion)
+							|| !d.tieneRefrigeracion() && !transporte.tieneRefrigeracion) {
+						Iterator<Paquete> iterador = d.getPaquetes().iterator();
+						while(!d.getPaquetes().isEmpty() && iterador.hasNext()) {
+							Paquete p = iterador.next();
+							transporte.cargarPaquete(p);
+							iterador.remove();
+							d.aumentarCapacidad();
+						}
+						return transporte.getCargaActual();
 					}
 				}
 			}
-			return transporte.getCargaActual();
 		}
+		throw new RuntimeException("No se puede cargar el transporte");
 	}
 
 	public void iniciarViaje(String matricula) {
@@ -187,32 +183,17 @@ public class Empresa {
 			throw new RuntimeException("No esta en viaje");
 		} else {
 			return transporte.getCostoKm()*obtenerKmDestino(matricula) + transporte.costoViaje();
-	
 		}
 	}
+	
 
 	public String obtenerTransporteIgual(String matricula) {
-//		for (Transporte t: transportes) {
-//			if(t.getMatricula().destino.equals(matricula.destino) 
-//					&& t.getMatricula().carga.equals(matricula.carga){
-//				return "Hay transporte igual";
-//			}
-//		}
-		
-		
-//		@Override
-//		public boolean equals(Object o) {
-//			if (o == null) {
-//				return false;
-//			}
-//			else if (!this.getClass().equals(o.getClass())) {
-//				return false;
-//			}
-//			Jugador j = (Jugador) o;
-//			return this.nombre.equals(j.nombre)
-//					&& this.numeroCamiseta.equals(j.numeroCamiseta);
-//		}
-//		
+		Transporte transporte = buscarTransporte(matricula);
+		for (Transporte t: transportes) {
+			if(t.getMatricula() != matricula && t.equals(transporte)) {
+				return t.getMatricula();
+			}
+		}
 		return null;
 	}
 }
