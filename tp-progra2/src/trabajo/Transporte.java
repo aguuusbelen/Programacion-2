@@ -12,9 +12,33 @@ public abstract class Transporte {
 	private double costoKm;
 	protected double seguro;
 	private HashSet<Paquete> paquetes;
+	private boolean estaEnViaje;
 	
-	
-	
+
+	public double getCapacidad() {
+		return capacidad;
+	}
+
+	public double getCargaMax() {
+		return cargaMax;
+	}
+
+	public boolean isTieneRefrigeracion() {
+		return tieneRefrigeracion;
+	}
+
+	public double getCostoKm() {
+		return costoKm;
+	}
+
+	public double getSeguro() {
+		return seguro;
+	}
+
+	public HashSet<Paquete> getPaquetes() {
+		return paquetes;
+	}
+
 	public Transporte(String matricula, double cargaMax, double capacidad, double costoKm) {
 
 		this.matricula = matricula;
@@ -23,6 +47,7 @@ public abstract class Transporte {
 		this.cargaActual = 0;
 		this.costoKm = costoKm;
 		this.paquetes = new HashSet<>();
+		this.estaEnViaje = true;
 		
 
 	}
@@ -45,6 +70,14 @@ public abstract class Transporte {
 
 	public double getCargaActual() {
 		return cargaActual;
+	}
+	
+	public boolean isEstaEnViaje() {
+		return estaEnViaje;
+	}
+
+	public void setEstaEnViaje(boolean estaEnViaje) {
+		this.estaEnViaje = estaEnViaje;
 	}
 
 	@Override

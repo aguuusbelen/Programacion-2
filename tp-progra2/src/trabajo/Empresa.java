@@ -168,18 +168,14 @@ public class Empresa {
 	}
 
 	public void iniciarViaje(String matricula) {
-//		if(matricula.estaEnViaje || !matricula.tieneDestino || matricula.paquete < 1) {
-//			throw new RuntimeException ("No tiene mercaderia cargada o ya esta en viaje");
-//		}
-//		else {
-//			matricula.iniciarViaje;
-//		transporte.setEstaEnViaje = true;
-//		}
-//		
-//		if (estaEnViaje || !tieneDestino || lista de paquetes esta vacia){
-//			genera excepcion
-//		} else{
-//		  estaEnViaje = true;
+		Transporte transporte = buscarTransporte(matricula);
+		if(transporte.estaEnViaje() || !tieneAsignadoDestino(matricula) || transporte.getPaquetes().size() < 1) {
+			throw new RuntimeException ("No tiene mercaderia cargada o ya esta en viaje");
+		}
+		else {
+			transporte.setEstaEnViaje(true);
+	//	transporte.setEstaEnViaje = true;
+		}
 	}
 
 	public void finalizarViaje(String matricula) {
