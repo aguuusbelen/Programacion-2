@@ -86,7 +86,7 @@ public abstract class Transporte {
 			return false;
 		}
 		Transporte t = (Transporte) obj;
-		return this.getClass().getSimpleName().equals(t.getClass().getSimpleName()) && this.destino.equals(t.destino)
+		return this.getClass().equals(t.getClass()) && this.destino.equals(t.destino)
 				&& this.cargaActual == t.cargaActual;
 	}
 }
