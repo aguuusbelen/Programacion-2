@@ -82,11 +82,7 @@ public abstract class Transporte {
 			return false;
 		}
 		Transporte t = (Transporte) obj;
-		boolean one = this.getClass().getTypeName().equals(t.getClass().getTypeName());
-		boolean two = this.destino.equals(t.destino);
-		boolean tree = this.cargaActual == t.cargaActual;
-		boolean four = this.paquetes.size() == t.paquetes.size();
 		return this.getClass().getTypeName().equals(t.getClass().getTypeName()) && this.destino.equals(t.destino)
-				&& this.paquetes.size() == t.paquetes.size();
+				&& this.cargaActual == t.cargaActual;
 	}
 }
