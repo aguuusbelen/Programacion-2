@@ -14,6 +14,7 @@ public class Empresa {
 	private List<Transporte> transportes;
 	private List<Destino> destinos;
 	private HashMap<String, String> destinosAsignados;
+	
 
 	public Empresa(String cuit, String nombre, int capacidadDeposito) {
 		this.cuit = cuit;
@@ -26,6 +27,8 @@ public class Empresa {
 		this.transportes = new ArrayList<>();
 		this.destinos = new ArrayList<>();
 		this.destinosAsignados = new HashMap<>();
+	
+		
 	}
 
 	public boolean incorporarPaquete(String destino, double peso, double volumen, boolean necesitaRefrigeracion) {
@@ -135,19 +138,14 @@ public class Empresa {
 		}
 		return null;
 	}
+	
 
 	public double cargarTransporte(String matricula) {
 		Transporte transporte = buscarTransporte(matricula);
 		if (!existeMatricula(matricula) || !tieneAsignadoDestino(matricula) || transporte.isEstaEnViaje()) {
 			throw new RuntimeException("No se puede cargar el transporte");
 		} else {
-			// tengo 4 casos
-			// TRANSPORTE DEPOSITO
-			//     si       si      primer if
-			//     si       no
-			//     no       si
-			//     no       no      segundo if
-			// los dos casos del medio no nos interesan
+			
 			for (Deposito d : depositos) {
 				if (d.tieneRefrigeracion() && transporte.tieneRefrigeracion) {
 
@@ -193,28 +191,19 @@ public class Empresa {
 
 
 	}
-			//vaciar la lista de paquetes del transporte
-			//eliminar del hashmap la matricula con su destino
-//			matricula.paquete = null;
-//			matricula.destino = null;
-//			matricula.tieneDestino = false;
-//		}
-
-		// if (!estaEnViaje) {
-		// se genera excepcion
-		// } else {
-		// se eliminan todos los elementos de la lista de paquetes
-		// el destino queda en null
-		// tieneDestino = false; }
-	
-
-	public int obtenerCostoViaje(String matricula) {
-//		if (!matricula.estaEnViaje) {
-//			throw new RuntimeException ("No esta en viaje");
-//		}
-//		else {
-//			
-//		}
+			
+	public double obtenerCostoViaje(String matricula) {
+		Transporte transporte = buscarTransporte(matricula);
+		if (!transporte.isEstaEnViaje()) {
+			throw new RuntimeException ("No esta en viaje");
+		} else {
+			//costo fijo + costoporkm*kmdestino + extras
+			//trailer + seguro
+			//megatrailer + seguro + comida
+			//flete + cantAcompañantes*costoAcompañantes
+			double costo = transporte.costofijo + destino + transporte.costoViaje();
+			transporte.costoViaje();
+		}
 
 		// if (!estaEnViaje) {
 		// se genera excepcion
@@ -222,7 +211,7 @@ public class Empresa {
 		// suma costo por km
 		// suma extras dependiendo el tipo de vehiculo
 
-		return 0;
+		return costo;
 	}
 
 	public String obtenerTransporteIgual(String matricula) {

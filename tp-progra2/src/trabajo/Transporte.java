@@ -70,6 +70,8 @@ public abstract class Transporte {
 				+ tieneRefrigeracion + ", kmViaje=" + costoKm + ", seguro=" + seguro + "]";
 	}
 
+	protected abstract void costoViaje();
+
 	
 
 	

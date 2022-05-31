@@ -16,6 +16,13 @@ public class Flete extends Transporte{
 	public boolean isTieneRefrigeracion() {
 		return tieneRefrigeracion;
 	}
+
+	@Override
+	public double costoViaje() {
+		double costo = 0;
+		costo = cantAcompaniantes*costoPorAcompaniante;
+		return costo;
+	}
 	
 	
 
