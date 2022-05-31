@@ -130,8 +130,8 @@ public class Empresa {
 			Transporte transporte = buscarTransporte(matricula);
 			if (!transporte.isEstaEnViaje()) {
 				for (Deposito d : depositos) {
-					if ((d.tieneRefrigeracion() && transporte.tieneRefrigeracion)
-							|| !d.tieneRefrigeracion() && !transporte.tieneRefrigeracion) {
+					if ((d.tieneRefrigeracion() && transporte.tieneRefrigeracion())
+							|| !d.tieneRefrigeracion() && !transporte.tieneRefrigeracion()) {
 						Iterator<Paquete> iterador = d.getPaquetes().iterator();
 						while (!d.getPaquetes().isEmpty() && iterador.hasNext()) {
 							Paquete p = iterador.next();

@@ -3,11 +3,10 @@ package trabajo;
 public class Trailer extends Transporte {
 	private double seguro;
 	
-	public Trailer(String matricula, double cargaMax, double capacidad, boolean refrigeracion, double costoKm,
+	public Trailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm,
 			double segCarga) {
-		super(matricula, cargaMax, capacidad, costoKm);
+		super(matricula, cargaMax, capacidad, costoKm, tieneRefrigeracion);
 		this.seguro = segCarga;
-		this.tieneRefrigeracion = refrigeracion;
 	}
 
 	@Override

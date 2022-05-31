@@ -7,8 +7,7 @@ public class MegaTrailer extends Transporte {
 
 	public MegaTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm,
 			double segCarga, double costoFijo, double costoComida) {
-		super(matricula, cargaMax, capacidad, costoKm);
-		this.tieneRefrigeracion = tieneRefrigeracion;
+		super(matricula, cargaMax, capacidad, costoKm, tieneRefrigeracion);
 		this.seguro = segCarga;
 		this.costoComida = costoComida;
 		this.costoFijo = costoFijo;

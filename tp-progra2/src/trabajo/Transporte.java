@@ -7,13 +7,13 @@ public abstract class Transporte {
 	private double capacidad; // peso
 	private double cargaMax; // volumen
 	private double cargaActual;
-	protected boolean tieneRefrigeracion;
+	private boolean tieneRefrigeracion;
 	private double costoKm;
 	private HashSet<Paquete> paquetes;
 	private boolean estaEnViaje;
 	private String destino;
 
-	public Transporte(String matricula, double cargaMax, double capacidad, double costoKm) {
+	public Transporte(String matricula, double cargaMax, double capacidad, double costoKm, boolean tieneRefrigeracion) {
 		this.matricula = matricula;
 		this.capacidad = capacidad;
 		this.cargaMax = cargaMax;
@@ -22,6 +22,7 @@ public abstract class Transporte {
 		this.paquetes = new HashSet<>();
 		this.estaEnViaje = false;
 		this.destino = "";
+		this.tieneRefrigeracion = tieneRefrigeracion;
 	}
 
 	public String getMatricula() {
@@ -41,6 +42,10 @@ public abstract class Transporte {
 
 	public boolean isEstaEnViaje() {
 		return estaEnViaje;
+	}
+
+	public boolean tieneRefrigeracion() {
+		return tieneRefrigeracion;
 	}
 
 	public void setEstaEnViaje(boolean estaEnViaje) {
