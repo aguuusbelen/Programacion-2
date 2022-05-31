@@ -68,10 +68,6 @@ public abstract class Transporte {
 		return costoKm;
 	}
 
-	public String getDestino() {
-		return destino;
-	}
-
 	public void setDestino(String destino) {
 		this.destino = destino;
 	}

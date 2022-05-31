@@ -97,11 +97,15 @@ public class Empresa {
 
 	public void asignarDestino(String matricula, String destino) { // falta verificar las distancias maximas de cada
 																	// transporte
-		Transporte transporte = buscarTransporte(matricula);
-		if (existeDestino(destino) && existeMatricula(matricula) && !transporte.isEstaEnViaje()) {
-			destinosAsignados.put(matricula, destino);
-		} else
+		if(existeDestino(destino) && existeMatricula(matricula)) {
+			Transporte transporte = buscarTransporte(matricula);
+			if(!transporte.isEstaEnViaje()) {
+				destinosAsignados.put(matricula, destino);
+				transporte.setDestino(destino);
+			}
+		} else {
 			throw new RuntimeException("No existe la matricula o el destino que se quiere asignar");
+		}
 	}
 
 	private boolean tieneAsignadoDestino(String matricula) {
