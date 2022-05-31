@@ -35,6 +35,10 @@ public class Deposito {
 		return paquetes;
 	}
 
+	public Integer getCapacidad() {
+		return capacidad;
+	}
+
 	
 	
 	

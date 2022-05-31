@@ -12,6 +12,7 @@ public abstract class Transporte {
 	protected double seguro;
 	private HashSet<Paquete> paquetes;
 	private boolean estaEnViaje;
+	
 
 	public Transporte(String matricula, double cargaMax, double capacidad, double costoKm) {
 		this.matricula = matricula;

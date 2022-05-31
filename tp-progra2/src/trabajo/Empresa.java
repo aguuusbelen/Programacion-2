@@ -33,12 +33,12 @@ public class Empresa {
 		Paquete paquete = new Paquete(destino, peso, volumen, necesitaRefrigeracion);
 		for (Deposito d : depositos) {
 			if (necesitaRefrigeracion && d.tieneRefrigeracion()) {
-				if (d.tieneCapacidad()) {
+				if (d.tieneCapacidad() && paquete.getVolumen() < d.getCapacidad()) {
 					d.agregarPaquete(paquete);
 					return true;
 				}
 			} else if (!necesitaRefrigeracion && !d.tieneRefrigeracion()) {
-				if (d.tieneCapacidad()) {
+				if (d.tieneCapacidad() && paquete.getVolumen() < d.getCapacidad()) {
 					d.agregarPaquete(paquete);
 					return true;
 				}
@@ -101,34 +101,26 @@ public class Empresa {
 		return false;
 	}
 
-//	public boolean estaEnViaje (String matricula) {
-//		// recorrer destinosAsignados y ver si la matricula esta ahi
-//		// se me ocurre eso pero no se como es lo de HasMap, HashSet y lrpm
-//		// voy a poner a ver videos a ver si sale (?
-//	}
-
-	public void asignarDestino(String matricula, String destino) { // falta verificar las distancias maximas de cada
-																	// transporte
-		if (existeDestino(destino) && existeMatricula(matricula)) { // && !estaEnViaje(matricula))
+	public void asignarDestino(String matricula, String destino) { // falta verificar las distancias maximas de cada transporte
+		Transporte transporte = buscarTransporte(matricula);		
+		if (existeDestino(destino) && existeMatricula(matricula) && !transporte.isEstaEnViaje()) {
 			destinosAsignados.put(matricula, destino);
 		} else
 			throw new RuntimeException("No existe la matricula o el destino que se quiere asignar");
 	}
 
 	private boolean tieneAsignadoDestino(String matricula) {
-		if (destinosAsignados.containsKey(matricula)) { // esto sirve solo si tenemos en cuenta eliminar del hash las
-														// matriculas cuando termine el viaje
+		if (destinosAsignados.containsKey(matricula)) { 
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	private Transporte buscarTransporte(String matricula) { // necesito algo que me devuelva todos los datos del
-															// transporte
+	private Transporte buscarTransporte(String matricula) { 
 		for (Transporte t : transportes) {
 			if (t.getMatricula().equals(matricula)) {
-				return t; // matricula, si tiene refrigeracion, el volumen, el peso
+				return t; 
 			}
 		}
 		return null;
@@ -206,6 +198,21 @@ public class Empresa {
 //				return "Hay transporte igual";
 //			}
 //		}
+		
+		
+//		@Override
+//		public boolean equals(Object o) {
+//			if (o == null) {
+//				return false;
+//			}
+//			else if (!this.getClass().equals(o.getClass())) {
+//				return false;
+//			}
+//			Jugador j = (Jugador) o;
+//			return this.nombre.equals(j.nombre)
+//					&& this.numeroCamiseta.equals(j.numeroCamiseta);
+//		}
+//		
 		return null;
 	}
 }
