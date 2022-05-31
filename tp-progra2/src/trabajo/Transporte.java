@@ -28,6 +28,12 @@ public abstract class Transporte {
 		
 
 	}
+	
+
+	public double getSeguro() {
+		return seguro;
+	}
+
 
 	public String getMatricula() {
 		return matricula;
@@ -62,7 +68,7 @@ public abstract class Transporte {
 		
 	}
 
-	
+	public abstract double costoViaje();
 
 	@Override
 	public String toString() {
@@ -70,7 +76,7 @@ public abstract class Transporte {
 				+ tieneRefrigeracion + ", kmViaje=" + costoKm + ", seguro=" + seguro + "]";
 	}
 
-	protected abstract void costoViaje();
+	
 
 	
 
