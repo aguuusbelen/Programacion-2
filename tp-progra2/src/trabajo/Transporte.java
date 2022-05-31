@@ -68,6 +68,14 @@ public abstract class Transporte {
 		return costoKm;
 	}
 
+	public String getDestino() {
+		return destino;
+	}
+
+	public void setDestino(String destino) {
+		this.destino = destino;
+	}
+
 	@Override
 	public String toString() {
 		return "Transporte [ID=" + matricula + ", pesoMax=" + capacidad + ", volMax=" + cargaMax + ", refrigeracion="
