@@ -14,7 +14,6 @@ public class Empresa {
 	private List<Transporte> transportes;
 	private List<Destino> destinos;
 	private HashMap<String, String> destinosAsignados;
-	
 
 	public Empresa(String cuit, String nombre, int capacidadDeposito) {
 		this.cuit = cuit;
@@ -27,8 +26,7 @@ public class Empresa {
 		this.transportes = new ArrayList<>();
 		this.destinos = new ArrayList<>();
 		this.destinosAsignados = new HashMap<>();
-	
-		
+
 	}
 
 	public boolean incorporarPaquete(String destino, double peso, double volumen, boolean necesitaRefrigeracion) {
@@ -45,8 +43,8 @@ public class Empresa {
 					return true;
 				}
 			}
-			
-		} return false;
+		}
+		return false;
 	}
 
 	public void agregarDestino(String destino, int km) {
@@ -66,7 +64,6 @@ public class Empresa {
 					segCarga, costoFijo, costoComida);
 			transportes.add(transporte);
 		}
-
 	}
 
 	public void agregarTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion,
@@ -75,7 +72,6 @@ public class Empresa {
 			Trailer transporte = new Trailer(matricula, cargaMax, capacidad, tieneRefrigeracion, costoKm, segCarga);
 			transportes.add(transporte);
 		}
-
 	}
 
 	public void agregarFlete(String matricula, double cargaMax, double capacidad, double costoKm, int cantAcompaniantes,
@@ -85,7 +81,6 @@ public class Empresa {
 					costoPorAcompaniante);
 			transportes.add(transporte);
 		}
-
 	}
 
 	private boolean existeMatricula(String matricula) {
@@ -138,80 +133,70 @@ public class Empresa {
 		}
 		return null;
 	}
-	
 
 	public double cargarTransporte(String matricula) {
 		Transporte transporte = buscarTransporte(matricula);
 		if (!existeMatricula(matricula) || !tieneAsignadoDestino(matricula) || transporte.isEstaEnViaje()) {
 			throw new RuntimeException("No se puede cargar el transporte");
 		} else {
-			
+
 			for (Deposito d : depositos) {
 				if (d.tieneRefrigeracion() && transporte.tieneRefrigeracion) {
 
 					for (Paquete p : d.getPaquetes()) {
 						transporte.cargarPaquete(p);
-						//d.eliminarPaquete(p);
+						// d.eliminarPaquete(p);
 					}
 
-				}else if (!d.tieneRefrigeracion() && !transporte.tieneRefrigeracion) {
+				} else if (!d.tieneRefrigeracion() && !transporte.tieneRefrigeracion) {
 					for (Paquete p : d.getPaquetes()) {
 						transporte.cargarPaquete(p);
-						//d.eliminarPaquete(p);
+						// d.eliminarPaquete(p);
 					}
 				}
-
 			}
-			return transporte.getCargaActual(); 
+			return transporte.getCargaActual();
 		}
 	}
 
 	public void iniciarViaje(String matricula) {
 		Transporte transporte = buscarTransporte(matricula);
-		
-		if(transporte.isEstaEnViaje() || !tieneAsignadoDestino(matricula) || transporte.getPaquetes().size() < 1) {
-			throw new RuntimeException ("No tiene mercaderia cargada o ya esta en viaje");
-		}
-		else {
+
+		if (transporte.isEstaEnViaje() || !tieneAsignadoDestino(matricula) || transporte.getPaquetes().size() < 1) {
+			throw new RuntimeException("No tiene mercaderia cargada o ya esta en viaje");
+		} else {
 			transporte.setEstaEnViaje(true);
-	
 		}
 	}
 
 	public void finalizarViaje(String matricula) {
 		Transporte transporte = buscarTransporte(matricula);
 		if (!transporte.isEstaEnViaje()) {
-			throw new RuntimeException ("No esta en viaje");
+			throw new RuntimeException("No esta en viaje");
 		} else {
 			transporte.eliminarPaquete();
 			destinosAsignados.remove(matricula);
 			transporte.setEstaEnViaje(false);
-
 		}
-
-
 	}
-			
+	
+	private double obtenerKmDestino(String matricula) {
+		String destino = destinosAsignados.get(matricula);
+		for (Destino d : destinos) {
+			if (d.getDestino().equals(destino)) {
+				return d.getKm();
+			}
+		} return 0;
+	}
+
 	public double obtenerCostoViaje(String matricula) {
 		Transporte transporte = buscarTransporte(matricula);
 		if (!transporte.isEstaEnViaje()) {
-			throw new RuntimeException ("No esta en viaje");
+			throw new RuntimeException("No esta en viaje");
 		} else {
-			//costo fijo + costoporkm*kmdestino + extras
-			//trailer + seguro
-			//megatrailer + seguro + comida
-			//flete + cantAcompañantes*costoAcompañantes
-			double costo = transporte.costofijo + destino + transporte.costoViaje();
-			transporte.costoViaje();
+			return transporte.getCostoKm()*obtenerKmDestino(matricula) + transporte.costoViaje();
+	
 		}
-
-		// if (!estaEnViaje) {
-		// se genera excepcion
-		// } else {
-		// suma costo por km
-		// suma extras dependiendo el tipo de vehiculo
-
-		return costo;
 	}
 
 	public String obtenerTransporteIgual(String matricula) {
@@ -223,5 +208,4 @@ public class Empresa {
 //		}
 		return null;
 	}
-
 }

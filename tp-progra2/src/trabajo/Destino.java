@@ -14,5 +14,11 @@ public class Destino {
 	public String getDestino() {
 		return destino;
 	}
+
+	public int getKm() {
+		return km;
+	}
+	
+	
 	
 }
