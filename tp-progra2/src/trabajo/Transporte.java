@@ -9,7 +9,6 @@ public abstract class Transporte {
 	private double cargaActual;
 	protected boolean tieneRefrigeracion;
 	private double costoKm;
-	protected double seguro;
 	private HashSet<Paquete> paquetes;
 	private boolean estaEnViaje;
 	private String destino;
@@ -23,10 +22,6 @@ public abstract class Transporte {
 		this.paquetes = new HashSet<>();
 		this.estaEnViaje = false;
 		this.destino = "";
-	}
-
-	public double getSeguro() {
-		return seguro;
 	}
 
 	public String getMatricula() {
@@ -75,7 +70,7 @@ public abstract class Transporte {
 	@Override
 	public String toString() {
 		return "Transporte [ID=" + matricula + ", pesoMax=" + capacidad + ", volMax=" + cargaMax + ", refrigeracion="
-				+ tieneRefrigeracion + ", kmViaje=" + costoKm + ", seguro=" + seguro + "]";
+				+ tieneRefrigeracion + ", kmViaje=" + costoKm + "]";
 	}
 
 	@Override
