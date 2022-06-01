@@ -104,8 +104,16 @@ public class Empresa {
 		if(existeDestino(destino) && existeMatricula(matricula)) {
 			Transporte transporte = buscarTransporte(matricula);
 			if(!transporte.isEstaEnViaje()) {
-				destinosAsignados.put(matricula, destino);
-				transporte.setDestino(destino);
+				if(transporte instanceof Trailer && obtenerKmDestino(matricula) < 500) {
+					destinosAsignados.put(matricula, destino);
+					transporte.setDestino(destino);
+				} else if(transporte instanceof MegaTrailer && obtenerKmDestino(matricula) > 500) {
+					destinosAsignados.put(matricula, destino);
+					transporte.setDestino(destino);
+				} else {
+					destinosAsignados.put(matricula, destino);
+					transporte.setDestino(destino);
+				}
 			}
 		} else {
 			throw new RuntimeException("No existe la matricula o el destino que se quiere asignar");
