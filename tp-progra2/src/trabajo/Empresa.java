@@ -201,4 +201,12 @@ public class Empresa {
 		return false;
 	}
 
+	
+	@Override
+	public String toString() {
+		return "Empresa: " + nombre + "\nCuit: " + cuit + "\nCantidad de depositos: " + depositos.size() + "\nCantidad de transportes: "
+				+ transportes.size();
+	}
+	
+	
 }	
