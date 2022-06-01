@@ -88,7 +88,7 @@ public class Empresa {
 		for (Deposito d : depositos) {
 			if ((necesitaRefrigeracion && d.tieneRefrigeracion())
 					|| (!necesitaRefrigeracion && !d.tieneRefrigeracion())) {
-				if (d.tieneCapacidad() && paquete.getVolumen() < d.getCapacidad()) {
+				if (d.tieneCapacidad() && paquete.getVolumen() <= d.getCapacidad()) {
 					d.agregarPaquete(paquete);
 					return true;
 				}
