@@ -27,20 +27,6 @@ public class Empresa {
 		this.destinosAsignados = new HashMap<>();
 	}
 
-	public boolean incorporarPaquete(String destino, double peso, double volumen, boolean necesitaRefrigeracion) {
-		Paquete paquete = new Paquete(destino, peso, volumen, necesitaRefrigeracion);
-		for (Deposito d : depositos) {
-			if ((necesitaRefrigeracion && d.tieneRefrigeracion())
-					|| (!necesitaRefrigeracion && !d.tieneRefrigeracion())) {
-				if (d.tieneCapacidad() && paquete.getVolumen() < d.getCapacidad()) {
-					d.agregarPaquete(paquete);
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
 	public void agregarDestino(String destino, int km) {
 		for (Destino d : destinos) {
 			if (d.getDestino().equals(destino)) {
@@ -77,37 +63,14 @@ public class Empresa {
 		}
 	}
 
-	private boolean existeMatricula(String matricula) {
-		for (Transporte t : transportes) {
-			if (t.getMatricula().equals(matricula)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean existeDestino(String destino) {
-		for (Destino d : destinos) {
-			if (d.getDestino().equals(destino)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public void asignarDestino(String matricula, String destino) { 
-		// falta verificar las distancias maximas de cada transporte
-		// 1. Hay que poner la distancia maxima a cada transporte.
-		// 2. Hay que validar esas distancias con el destino
-		// Trailer menos de 500km
-		// MegaTrailer mas de 500 km
-		if(existeDestino(destino) && existeMatricula(matricula)) {
+	public void asignarDestino(String matricula, String destino) {
+		if (existeDestino(destino) && existeMatricula(matricula)) {
 			Transporte transporte = buscarTransporte(matricula);
-			if(!transporte.isEstaEnViaje()) {
-				if(transporte instanceof Trailer && obtenerKmDestino(matricula) < 500) {
+			if (!transporte.isEstaEnViaje()) {
+				if (transporte instanceof Trailer && obtenerKmDestino(matricula) < 500) {
 					destinosAsignados.put(matricula, destino);
 					transporte.setDestino(destino);
-				} else if(transporte instanceof MegaTrailer && obtenerKmDestino(matricula) > 500) {
+				} else if (transporte instanceof MegaTrailer && obtenerKmDestino(matricula) > 500) {
 					destinosAsignados.put(matricula, destino);
 					transporte.setDestino(destino);
 				} else {
@@ -120,17 +83,18 @@ public class Empresa {
 		}
 	}
 
-	private boolean tieneAsignadoDestino(String matricula) {
-		return destinosAsignados.containsKey(matricula);
-	}
-
-	private Transporte buscarTransporte(String matricula) {
-		for (Transporte t : transportes) {
-			if (t.getMatricula().equals(matricula)) {
-				return t;
+	public boolean incorporarPaquete(String destino, double peso, double volumen, boolean necesitaRefrigeracion) {
+		Paquete paquete = new Paquete(destino, peso, volumen, necesitaRefrigeracion);
+		for (Deposito d : depositos) {
+			if ((necesitaRefrigeracion && d.tieneRefrigeracion())
+					|| (!necesitaRefrigeracion && !d.tieneRefrigeracion())) {
+				if (d.tieneCapacidad() && paquete.getVolumen() < d.getCapacidad()) {
+					d.agregarPaquete(paquete);
+					return true;
+				}
 			}
 		}
-		return null;
+		return false;
 	}
 
 	public double cargarTransporte(String matricula) {
@@ -177,16 +141,6 @@ public class Empresa {
 		}
 	}
 
-	private double obtenerKmDestino(String matricula) {
-		String destino = destinosAsignados.get(matricula);
-		for (Destino d : destinos) {
-			if (d.getDestino().equals(destino)) {
-				return d.getKm();
-			}
-		}
-		return 0;
-	}
-
 	public double obtenerCostoViaje(String matricula) {
 		Transporte transporte = buscarTransporte(matricula);
 		if (!transporte.isEstaEnViaje()) {
@@ -205,4 +159,46 @@ public class Empresa {
 		}
 		return null;
 	}
-}
+
+	private boolean tieneAsignadoDestino(String matricula) {
+		return destinosAsignados.containsKey(matricula);
+	}
+
+	private Transporte buscarTransporte(String matricula) {
+		for (Transporte t : transportes) {
+			if (t.getMatricula().equals(matricula)) {
+				return t;
+			}
+		}
+		return null;
+	}
+
+	private double obtenerKmDestino(String matricula) {
+		String destino = destinosAsignados.get(matricula);
+		for (Destino d : destinos) {
+			if (d.getDestino().equals(destino)) {
+				return d.getKm();
+			}
+		}
+		return 0;
+	}
+
+	private boolean existeMatricula(String matricula) {
+		for (Transporte t : transportes) {
+			if (t.getMatricula().equals(matricula)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean existeDestino(String destino) {
+		for (Destino d : destinos) {
+			if (d.getDestino().equals(destino)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+}	
