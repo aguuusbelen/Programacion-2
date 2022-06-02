@@ -67,12 +67,10 @@ public class Empresa {
 		if (existeDestino(destino) && existeMatricula(matricula)) {
 			Transporte transporte = buscarTransporte(matricula);
 			if (!transporte.isEstaEnViaje()) {
-				if (transporte instanceof Trailer && obtenerKmDestino(matricula) < 500) {
-					destinosAsignados.put(matricula, destino);
-					transporte.setDestino(destino);
-				} else if (transporte instanceof MegaTrailer && obtenerKmDestino(matricula) > 500) {
-					destinosAsignados.put(matricula, destino);
-					transporte.setDestino(destino);
+				if (transporte instanceof Trailer && cantKilometros(destino) > 500) {
+					throw new RuntimeException("El destino se encuentra a mas de 500km");
+				} else if (transporte instanceof MegaTrailer && cantKilometros(destino) < 500) {
+					throw new RuntimeException("El destino se encuentra a menos de 500km");
 				} else {
 					destinosAsignados.put(matricula, destino);
 					transporte.setDestino(destino);
@@ -181,6 +179,14 @@ public class Empresa {
 			}
 		}
 		return 0;
+	}
+	
+	private double cantKilometros(String destino) {
+		for (Destino d : destinos) {
+			if (d.getDestino().equals(destino)) {
+				return d.getKm();
+			}
+		} return 0;
 	}
 
 	private boolean existeMatricula(String matricula) {
