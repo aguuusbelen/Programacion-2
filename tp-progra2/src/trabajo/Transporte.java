@@ -25,15 +25,27 @@ public abstract class Transporte {
 		this.tieneRefrigeracion = tieneRefrigeracion;
 	}
 
-	public String getMatricula() {
-		return matricula;
-	}
-
 	public void cargarPaquete(Paquete p) {
 		if (cargaActual <= cargaMax) {
 			paquetes.add(p);
 			cargaActual = cargaActual + p.getVolumen();
 		}
+	}
+	
+	public boolean tieneRefrigeracion() {
+		return tieneRefrigeracion;
+	}
+	
+	public void eliminarPaquete() {
+		paquetes.removeAll(paquetes);
+	}
+
+	public double costoViaje() {
+		return 0;
+	}
+	
+	public String getMatricula() {
+		return matricula;
 	}
 
 	public double getCargaActual() {
@@ -44,24 +56,12 @@ public abstract class Transporte {
 		return estaEnViaje;
 	}
 
-	public boolean tieneRefrigeracion() {
-		return tieneRefrigeracion;
-	}
-
 	public void setEstaEnViaje(boolean estaEnViaje) {
 		this.estaEnViaje = estaEnViaje;
 	}
 
 	public HashSet<Paquete> getPaquetes() {
 		return paquetes;
-	}
-
-	public void eliminarPaquete() {
-		paquetes.removeAll(paquetes);
-	}
-
-	public double costoViaje() {
-		return 0;
 	}
 
 	public double getCostoKm() {
