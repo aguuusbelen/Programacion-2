@@ -1,92 +1,292 @@
-# tp-progra2
+= Informe del Trabajo Práctico Programación II
+
+Integrantes
+Agustina Mendez, <agustina.996@hotmail.com> 
+Kevin Montenegro, <kevinmontenegroac@gmail.com> 
 
 
+:title-page:
+:numbered:
+:source-highlighter: coderay
+:tabsize: 4
 
-## Getting started
+== Introducción
+La empresa de transportes “Expreso Libre” posee una flota de transportes para trasladar los productos que vende desde sus depósitos hacia sus centros de distribución ubicados en distintos puntos del país. La Empresa cuenta con distintos tipos de transportes, Camión Trailer, Camión MegaTrailer y Flete, y necesita automatizar las operaciones y consultas habituales que responden a las actividades de carga y entrega de la mercadería. Los productos que se transportan pueden necesitar refrigeración o no, por lo cual la empresa cuenta con un depósito para productos con necesidad de refrigeración y otro depósito sin ese requerimiento.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+== Implementación 
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+Para la implementación se consideraron las siguientes clases
 
-## Add your files
+=== Empresa
+En primer lugar se inicializan las variables y se crean y agregan los depositos (uno con refrigeracion y otro sin) a la lista de depositos
+Se agregan los destinos nuevos a la lista de destinos
+  
+[source, java]
+----
+  private int cuit;
+  private String nombre;
+  private List<Deposito> depositos; //contiene los dos depositos de la empresa
+  private List<Transporte> transportes; //no tiene repetidos
+  private List<Destino> destinos; //no tiene repetidos
+  private HashMap<String, String> destinosAsignados; //no tiene repetidos
+  
+  public Empresa(String cuit, String nombre, int capacidadDeposito);
+  
+  void agregarDestino(String destino, int km){
+    for (Destino d : destinos) {
+      if (d.getDestino().equals(destino)) {
+        throw new RuntimeException("El destino ya existe");
+      }
+    }
+    Destino destino_ = new Destino(destino, km);
+    this.destinos.add(destino_);
+  }
+----
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+Los metodos para agregar transportes verifican que la matricula no este en la lista con el método auxiliar existe Matricula (matricula)
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/a2518/tp-progra2.git
-git branch -M main
-git push -uf origin main
-```
+[source, java]
+----
+void agregarTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm, double segCarga){
+  if (!existeMatricula(matricula)) {
+    Trailer transporte = new Trailer(matricula, cargaMax, capacidad, tieneRefrigeracion, costoKm, segCarga);
+    transportes.add(transporte);
+  }
+}
 
-## Integrate with your tools
+void agregarMegaTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm, double segCarga, double costoFijo, double costoComida){
+  if (!existeMatricula(matricula)) {
+    MegaTrailer transporte = new MegaTrailer(matricula, cargaMax, capacidad, tieneRefrigeracion, costoKm, segCarga, costoFijo, costoComida);
+    transportes.add(transporte);
+  }
+}
 
-- [ ] [Set up project integrations](https://gitlab.com/a2518/tp-progra2/-/settings/integrations)
+void agregarFlete(String matricula, double cargaMax, double capacidad, double costoKm, int cantAcompaniantes, double costoPorAcompaniante){
+  if (!existeMatricula(matricula)) {
+    Flete transporte = new Flete(matricula, cargaMax, capacidad, costoKm, cantAcompaniantes, costoPorAcompaniante);
+    transportes.add(transporte);
+  }
+}
+----
 
-## Collaborate with your team
+Para asignarle un destino a un transporte, primero verificamos que el destino y la matricula esten cargadas en el sistema. Luego, con el metodo auxiliar buscarTransporte (matricula) obtenemos todos los datos del transporte.
+Para asignar el destino tambien debemos verificar que:
+* El transporte no se encuentre en viaje
+* En el caso de ser un Trailer, que el destino se encuentre a menos de 500km
+* En el caso de ser un Mega Trailer, que el destino se encuentre a mas de 500km
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+[source, java]
+----
+  public void asignarDestino(String matricula, String destino){
+    if (existeDestino(destino) && existeMatricula(matricula)) {
+      Transporte transporte = buscarTransporte(matricula);
+      if (!transporte.isEstaEnViaje()) {
+        if (transporte instanceof Trailer && cantKilometros(destino) > 500) {
+          throw new RuntimeException("El destino se encuentra a mas de 500km");
+        } else if (transporte instanceof MegaTrailer && cantKilometros(destino) < 500) {
+          throw new RuntimeException("El destino se encuentra a menos de 500km");
+        } else {
+          destinosAsignados.put(matricula, destino);
+          transporte.setDestino(destino);
+        }
+      }
+    } else {
+      throw new RuntimeException("No existe la matricula o el destino que se quiere asignar");
+    }
+  }
+----
+Recorre la lista de depositos y verifica que deposito y paquete tengan (o no) refrigeracion para incorporar los paquetes al deposito adecuado
 
-## Test and Deploy
+[source, java]
+----
+  public boolean incorporarPaquete(String destino, double peso, double volumen, boolean necesitaRefrigeracion) {
+    Paquete paquete = new Paquete(destino, peso, volumen, necesitaRefrigeracion);
+    for (Deposito d : depositos) {
+      if ((necesitaRefrigeracion && d.tieneRefrigeracion()) || (!necesitaRefrigeracion && !d.tieneRefrigeracion())) {
+        if (d.tieneCapacidad() && paquete.getVolumen() <= d.getCapacidad()) {
+          d.agregarPaquete(paquete);
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+----
+Verificamos que exista la matricula, que tenga asignado un destino y que no este en viaje
+Recorremos con un for de depositos para seleccionar según si el transport e tiene refrigeracion o no, el deposito adecuado
+En principio, intentamos hacer la carga de paquetes con otro for pero al intentar eliminar el paquete del deposito no funcionaba
+Como solución usamos un iterador para ir agregando al transporte y eliminando del deposito los paquetes
+Ademas, usamos un metodo auxiliar aumentarCapacidad () en deposito
 
-Use the built-in continuous integration in GitLab.
+[source, java]
+----
+  public double cargarTransporte(String matricula) {
+    if (existeMatricula(matricula) && tieneAsignadoDestino(matricula)) {
+    Transporte transporte = buscarTransporte(matricula);
+      if (!transporte.isEstaEnViaje()) {
+        for (Deposito d : depositos) {
+          if ((d.tieneRefrigeracion() && transporte.tieneRefrigeracion()) ||!d.tieneRefrigeracion() && !transporte.tieneRefrigeracion()) {
+            Iterator<Paquete> iterador = d.getPaquetes().iterator();
+            while (!d.getPaquetes().isEmpty() && iterador.hasNext()) {
+              Paquete p = iterador.next();
+              transporte.cargarPaquete(p);
+              iterador.remove();
+              d.aumentarCapacidad();
+            }
+            return transporte.getCargaActual();
+          }
+        }
+      }
+    }
+    throw new RuntimeException("No se puede cargar el transporte");
+  }
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+  public void iniciarViaje(String matricula) {
+    Transporte transporte = buscarTransporte(matricula);
+    if (transporte.isEstaEnViaje() || !tieneAsignadoDestino(matricula) || transporte.getPaquetes().size() < 1) {
+      throw new RuntimeException("No tiene mercaderia cargada o ya esta en viaje");
+    } else {
+      transporte.setEstaEnViaje(true);
+    }
+  }
+  
+  public void finalizarViaje(String matricula) {
+    Transporte transporte = buscarTransporte(matricula);
+    if (!transporte.isEstaEnViaje()) {
+      throw new RuntimeException("No esta en viaje");
+    } else {
+      transporte.eliminarPaquete();
+      destinosAsignados.remove(matricula);
+      transporte.setEstaEnViaje(false);
+      transporte.setDestino("");
+    }
+  }
+----
+Si el transporte esta en viaje, obtiene el costo con ayuda de la funcion auxiliar y obtener KmDestino (matricula) y con costoViaje ()
 
-***
+[source, java]
+----
+  public double obtenerCostoViaje(String matricula) {
+    Transporte transporte = buscarTransporte(matricula);
+    if (!transporte.isEstaEnViaje()) {
+      throw new RuntimeException("No esta en viaje");
+    } else {
+        return transporte.getCostoKm() * obtenerKmDestino(matricula) + transporte.costoViaje();
+    }
+  }
+----
+Recorriendo la lista de transportes verificamos no compara r la misma matricula y luego verificamos con equals que los transportes sean iguales
+Se considera igual si:
+* Son el mismo tipo de transporte
+* Tiene n el mismo destino
+* Llevan la misma carga de paquetes
 
-# Editing this README
+[source, java]
+----
+  public String obtenerTransporteIgual(String matricula) {
+    Transporte transporte = buscarTransporte(matricula);
+    for (Transporte t : transportes) {
+      if (t.getMatricula() != matricula && t.equals(transporte)) {
+        return t.getMatricula();
+      }
+    }
+    return null;
+  }
+----
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+=== Deposito
+Agregar paquete: agrega el paquete a la lista y resta en 1 la capacidad del deposito. Una vez que eliminamos el paquete de la lista, aumentamos en 1 la capacidad del deposito
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+[source, java]
+----
+  private HashSet<Paquete> paquetes;
+  private boolean refrigeracion;
+  private Integer capacidad;
+  public Deposito (boolean refrigeracion, int capacidad)
 
-## Name
-Choose a self-explaining name for your project.
+  public void agregarPaquete(Paquete paquete) {
+    paquetes.add(paquete);
+    capacidad = capacidad - 1;
+  }
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+  public void aumentarCapacidad() {
+    capacidad = capacidad + 1;
+  }
+  
+  public boolean tieneCapacidad() {
+    return paquetes.size() < capacidad;
+----
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+=== Transporte
+Que contiene los metodos para verificar si queda lugar en el transporte, agregar paquetes y actualizar sus valores. Tambien, una vez finalizado el viaje, se eliminan los paquetes 
+[source, java]
+----
+  private String matricula;
+  private double capacidad; // peso
+  private double cargaMax; // volumen
+  private double cargaActual; //inicialmente es 0, carga Actual<=cargaMax
+  private boolean tieneRefrigeracion;
+  private double costoKm;
+  private HashSet<Paquete> paquetes;
+  private boolean estaEnViaje;
+  private String destino;
+  public Transporte(String matricula, double cargaMax, double capacidad, double costoKm, boolean tieneRefrigeracion)
+  public void cargarPaquete(Paquete p) {
+    if (cargaActual <= cargaMax) {
+      paquetes.add(p);
+      cargaActual = cargaActual + p.getVolumen();
+    }
+  }
+  public void eliminarPaquete() {
+    paquetes.removeAll(paquetes);
+  }
+----
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+Tambien tenemos todas las clases que hereddan de transporte
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+[source, java]
+----
+  public class Trailer extends Transporte
+    private double seguro;
+    public Trailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm,double segCarga)
+  @Override suma al costo total del viaje los extras que son exclusivos de los trailer
+  public double costoViaje() {
+    return seguro;
+  }
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+  public class MegaTrailer extends Transporte
+  private double costoComida;
+  private double costoFijo;
+  private double seguro;
+  public MegaTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm, double segCarga, double costoFijo, double costoComida)
+  @Override suma al costo total del viaje los extras que son exclusivos de los mega trailer
+  public double costoViaje() {
+    return costoComida + costoFijo + seguro;
+  }
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+  public class Flete extends Transporte
+  private int acompañante;
+  private int costo acompañante;
+  public Flete(String matricula, double cargaMax, double capacidad, double costoKm, int cantAcompaniantes, double costoPorAcompaniante)
+  @Override
+  public double costoViaje() {
+    return cantAcompaniantes * costoPorAcompaniante;
+  }
+----
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+=== Paquete y destino
+[source, java]
+----
+  public class Paquete{
+  private int peso;
+  private int volumen;
+  private String destino;
+  private boolean refrigeracion;
+  public Paquete (String destino, double peso, double volumen, boolean refrigeracion)
+  }
+  public class Destino{
+  private String destino;
+  private int km;
+  public Destino(String destino, int km)
+  }
+----
