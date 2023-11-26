@@ -1,4 +1,4 @@
-=Informe del Trabajo Práctico Programación II
+= Informe del Trabajo Práctico Programación II
 
 Integrantes
 Agustina Mendez, <agustina.996@hotmail.com> 
